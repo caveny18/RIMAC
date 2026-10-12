@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plataforma Comercial & Centro Documental | RIMAC Seguros</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- html2pdf.js para exportación a PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            rimac: {
+              red: '#D31411',
+              darkred: '#9B0B09',
+              lightred: '#FFF1F1',
+              dark: '#1E1E24',
+              gray: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #F8FAFC; font-family: 'Inter', sans-serif; }
+    .bg-rimac-gradient { background: linear-gradient(135deg, #D31411 0%, #9B0B09 100%); }
+    .tab-btn { transition: all 0.25s ease-in-out; }
+    .tab-btn.active {
+      background: #D31411;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(211, 20, 17, 0.35);
+      transform: translateY(-2px);
+    }
+    .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12); }
+    
+    #pdfPrintContainer {
+      width: 210mm;
+      padding: 10mm 12mm;
+      background: white;
+      box-sizing: border-box;
+      font-size: 10px;
+      color: #0F172A;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- HEADER BRANDING RIMAC -->
+  <header class="bg-rimac-gradient text-white shadow-xl sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="bg-white text-rimac-red font-black px-3.5 py-1 rounded-xl text-2xl tracking-tighter shadow-md transform hover:scale-105 transition duration-300">
+          RIMAC
+        </div>
+        <div class="border-l border-white/20 pl-3">
+          <h1 class="text-sm font-extrabold tracking-wide uppercase">Plataforma Comercial</h1>
+          <p class="text-[11px] text-red-100 font-medium">Cotizaciones & Buscador de Clínicas</p>
+        </div>
+      </div>
+      
+      <div class="hidden lg:flex items-center space-x-6 text-xs font-semibold">
+        <div class="flex items-center space-x-2 bg-white/10 px-3.5 py-1.5 rounded-full border border-white/20">
+          <i class="fa-solid fa-headset text-yellow-300 animate-pulse"></i>
+          <span>Central Comercial: (01) 411-1111</span>
+        </div>
+        <span class="bg-white text-rimac-red px-3 py-1.5 rounded-full font-bold shadow-sm">
+          <i class="fa-solid fa-shield-halved mr-1"></i> Tarifario 2026
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8 flex-grow w-full">
+
+    <!-- SECCIÓN DATOS DEL CLIENTE Y ASESOR -->
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-6">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-slate-100 pb-5">
+        <div>
+          <span class="text-xs font-bold text-rimac-red uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full">
+            <i class="fa-solid fa-user-pen mr-1"></i> Personalización de Cotización
+          </span>
+          <h2 class="text-xl font-black text-slate-900 mt-1">Datos de la Propuesta</h2>
+        </div>
+        <p class="text-xs text-slate-500 max-w-md">
+          Ingresa la información del cliente para generar cotizaciones personalizadas e incluir cónyuge y dependientes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- DATOS DEL CLIENTE -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-address-card text-rimac-red mr-2 text-sm"></i> Cliente Principal
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Nombre Completo</label>
+              <input id="clientName" type="text" placeholder="Ej. Jimena Esquivel" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold focus:bg-white focus:border-rimac-red focus:ring-1 focus:ring-rimac-red outline-none transition">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">DNI / CE</label>
+              <input id="clientID" type="text" placeholder="Ej. 72819203" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold focus:bg-white focus:border-rimac-red focus:ring-1 focus:ring-rimac-red outline-none transition">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Teléfono Móvil</label>
+              <input id="clientPhone" type="text" placeholder="Ej. 987654321" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold focus:bg-white focus:border-rimac-red focus:ring-1 focus:ring-rimac-red outline-none transition">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Correo Electrónico</label>
+              <input id="clientEmail" type="email" placeholder="cliente@correo.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold focus:bg-white focus:border-rimac-red focus:ring-1 focus:ring-rimac-red outline-none transition">
+            </div>
+          </div>
+        </div>
+
+        <!-- DATOS DEL ASESOR -->
+        <div class="space-y-4 lg:border-l lg:border-slate-100 lg:pl-8">
+          <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-headset text-rimac-red mr-2 text-sm"></i> Asesor Comercial
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Nombre del Asesor</label>
+              <input id="agentName" type="text" value="Carlos Ruiz" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:bg-white focus:border-rimac-red outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Teléfono Asesor</label>
+              <input id="agentPhone" type="text" value="960778888" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:bg-white focus:border-rimac-red outline-none">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Correo Electrónico Asesor</label>
+              <input id="agentEmail" type="email" value="carlos.ruizc@rimac.com.pe" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:bg-white focus:border-rimac-red outline-none">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESTAÑAS NAVEGABLES -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 overflow-x-auto flex space-x-2">
+      <button onclick="switchTab('modulares')" id="tab-modulares" class="tab-btn active flex-1 min-w-[140px] py-3 px-2 rounded-xl text-xs font-extrabold flex items-center justify-center space-x-1.5">
+        <i class="fa-solid fa-hospital-user text-sm"></i>
+        <span>Salud Modulares</span>
+      </button>
+      <button onclick="switchTab('oro')" id="tab-oro" class="tab-btn flex-1 min-w-[140px] py-3 px-2 rounded-xl text-xs font-extrabold text-slate-500 hover:bg-slate-100 flex items-center justify-center space-x-1.5">
+        <i class="fa-solid fa-award text-sm text-amber-500"></i>
+        <span>Salud de Oro</span>
+      </button>
+      <button onclick="switchTab('flexible')" id="tab-flexible" class="tab-btn flex-1 min-w-[140px] py-3 px-2 rounded-xl text-xs font-extrabold text-slate-500 hover:bg-slate-100 flex items-center justify-center space-x-1.5">
+        <i class="fa-solid fa-sliders text-sm"></i>
+        <span>Salud Flexible</span>
+      </button>
+      <button onclick="switchTab('futuro')" id="tab-futuro" class="tab-btn flex-1 min-w-[140px] py-3 px-2 rounded-xl text-xs font-extrabold text-slate-500 hover:bg-slate-100 flex items-center justify-center space-x-1.5">
+        <i class="fa-solid fa-piggy-bank text-sm"></i>
+        <span>Vida Futuro</span>
+      </button>
+      <button onclick="switchTab('clinicas')" id="tab-clinicas" class="tab-btn flex-1 min-w-[140px] py-3 px-2 rounded-xl text-xs font-extrabold text-slate-500 hover:bg-slate-100 flex items-center justify-center space-x-1.5">
+        <i class="fa-solid fa-map-location-dot text-sm text-red-500"></i>
+        <span>Clínicas</span>
+      </button>
+      <button onclick="switchTab('docs')" id="tab-docs" class="tab-btn flex-1 min-w-[140px] py-3 px-2 rounded-xl text-xs font-extrabold text-slate-500 hover:bg-slate-100 flex items-center justify-center space-x-1.5">
+        <i class="fa-solid fa-folder-open text-sm text-yellow-500"></i>
+        <span>Documentos (9)</span>
+      </button>
+    </div>
+
+    <!-- SECCIÓN 1: SALUD MODULARES (Vital, Red Preferente, Red Médica) -->
+    <section id="content-modulares" class="space-y-6">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-5">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+            <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Configuración del Grupo Familiar (Modulares)
+          </h3>
+          <span class="text-[11px] text-slate-500 font-semibold bg-slate-100 px-3 py-1 rounded-full"><i class="fa-solid fa-circle-check text-rimac-red mr-1"></i> Selecciona los planes que deseas incluir en el PDF</span>
+        </div>
+
+        <!-- INTEGRANTES DEL GRUPO FAMILIAR -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Edad Titular</label>
+            <input id="modAgeTitular" type="number" value="35" min="0" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none" onchange="calcModulares()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Cónyuge (Opcional - Edad)</label>
+            <input id="modAgeConyugue" type="number" placeholder="Ej. 33 (vacío si no aplica)" min="0" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none" onchange="calcModulares()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Hijos / Dependientes (Edades)</label>
+            <input id="modAgeDeps" type="text" placeholder="Ej. 5, 8 (separados por coma)" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none" onchange="calcModulares()">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Modalidad de Pago</label>
+            <select id="modQuotas" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="calcModulares()">
+              <option value="12" selected>12 Cuotas Mensuales</option>
+              <option value="1">1 Pago Anual</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">% Descuento Comercial (Opcional)</label>
+            <div class="relative">
+              <input id="modDiscount" type="number" value="10" min="0" max="50" step="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none pr-8" oninput="calcModulares()">
+              <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="modularesResults" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- SECCIÓN 2: SALUD DE ORO (Aparte) -->
+    <section id="content-oro" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-5">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+          <span class="w-3 h-3 bg-amber-500 rounded-full mr-2"></span> Cotizador Exclusivo - Seguro Salud de Oro (Adulto Mayor / Senior)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-amber-50/50 p-4 rounded-2xl border border-amber-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Edad del Asegurado (50+ años)</label>
+            <input id="oroAge" type="number" value="65" min="50" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-amber-500 outline-none" onchange="calcOro()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Modalidad de Pago</label>
+            <select id="oroQuotas" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none" onchange="calcOro()">
+              <option value="12" selected>12 Cuotas Mensuales</option>
+              <option value="1">1 Pago Anual</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">% Descuento Comercial</label>
+            <div class="relative">
+              <input id="oroDiscount" type="number" value="5" min="0" max="50" step="1" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none pr-8" oninput="calcOro()">
+              <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="oroResults"></div>
+    </section>
+
+    <!-- SECCIÓN 3: SALUD FLEXIBLE -->
+    <section id="content-flexible" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+          <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Configuración Salud Flexible
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Edad del Asegurado</label>
+            <input id="flexAge" type="number" value="28" min="0" max="99" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="calcFlexible()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Modalidad de Pago</label>
+            <select id="flexQuotas" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="calcFlexible()">
+              <option value="12" selected>12 Cuotas Mensuales</option>
+              <option value="1">1 Pago Anual</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">% Descuento Comercial</label>
+            <div class="relative">
+              <input id="flexDiscount" type="number" value="0" min="0" max="50" step="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none pr-8" oninput="calcFlexible()">
+              <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-4 space-y-3">
+          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+            Coberturas Adicionales Elegibles:
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 hover:border-red-200 transition">
+              <input type="checkbox" id="chkA1" class="w-4 h-4 text-rimac-red rounded accent-red-600" onchange="calcFlexible()" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Chequeo Preventivo y Vacunas</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 hover:border-red-200 transition">
+              <input type="checkbox" id="chkA2" class="w-4 h-4 text-rimac-red rounded accent-red-600" onchange="calcFlexible()" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Odontología y Oftalmología</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 hover:border-red-200 transition">
+              <input type="checkbox" id="chkA3" class="w-4 h-4 text-rimac-red rounded accent-red-600" onchange="calcFlexible()" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Hospitalización y Maternidad</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 hover:border-red-200 transition">
+              <input type="checkbox" id="chkA4" class="w-4 h-4 text-rimac-red rounded accent-red-600" onchange="calcFlexible()" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Sepelio y Exoneración</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 hover:border-red-200 transition">
+              <input type="checkbox" id="chkA5" class="w-4 h-4 text-rimac-red rounded accent-red-600" onchange="calcFlexible()" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Emergencias y Ambulancia</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 hover:border-red-200 transition">
+              <input type="checkbox" id="chkA6" class="w-4 h-4 text-rimac-red rounded accent-red-600" onchange="calcFlexible()">
+              <span class="ml-3 text-xs font-bold text-slate-800">Indemnización por Cáncer</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div id="flexibleResults"></div>
+    </section>
+
+    <!-- SECCIÓN 4: VIDA FUTURO GARANTIZADO -->
+    <section id="content-futuro" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-4">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+          <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Vida Futuro Garantizado
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Edad del Asegurado (18-64)</label>
+            <input id="futAge" type="number" value="35" min="18" max="64" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="calcFuturo()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Años de Ahorro</label>
+            <select id="futYears" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="calcFuturo()">
+              <option value="12" selected>12 Años</option>
+              <option value="10">10 Años</option>
+              <option value="20">20 Años</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Retorno Garantizado</label>
+            <select id="futReturn" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="calcFuturo()">
+              <option value="1.25" selected>125% Devolución</option>
+              <option value="1.00">100% Devolución</option>
+              <option value="1.50">150% Devolución</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Suma Asegurada Muerte</label>
+            <select id="futSA" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="calcFuturo()">
+              <option value="100000" selected>S/ 100,000</option>
+              <option value="80000">S/ 80,000</option>
+              <option value="60000">S/ 60,000</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="futuroResults"></div>
+    </section>
+
+    <!-- SECCIÓN 5: BUSCADOR DE CLÍNICAS ASOCIADAS -->
+    <section id="content-clinicas" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <span class="text-xs font-bold text-rimac-red uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full">
+              <i class="fa-solid fa-hospital mr-1"></i> Red Médica Interactiva
+            </span>
+            <h3 class="text-xl font-black text-slate-900 mt-2">Buscador Rápido de Clínicas y Especialidades</h3>
+          </div>
+          <p class="text-xs text-slate-500 max-w-sm">
+            Filtra instantáneamente las clínicas afiliadas por plan de salud o especialidad médica requerida.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Filtrar por Plan de Salud</label>
+            <select id="filterPlan" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none" onchange="filterClinics()">
+              <option value="todos" selected>Todos los Planes</option>
+              <option value="Red Médica">Red Médica (Exclusiva)</option>
+              <option value="Red Preferente">Red Preferente</option>
+              <option value="Plan Vital">Plan Vital</option>
+              <option value="Salud de Oro">Salud de Oro (Senior)</option>
+              <option value="Salud Flexible">Salud Flexible</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Filtrar por Especialidad / Servicio</label>
+            <select id="filterSpecialty" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none" onchange="filterClinics()">
+              <option value="todos" selected>Todas las Especialidades</option>
+              <option value="Cardiología">Cardiología</option>
+              <option value="Oncología">Oncología</option>
+              <option value="Pediatría">Pediatría</option>
+              <option value="Geriatría">Geriatría (Adulto Mayor)</option>
+              <option value="Emergencias 24h">Emergencias 24h</option>
+              <option value="Maternidad">Maternidad</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Buscar por Nombre o Distrito</label>
+            <input id="searchClinicText" type="text" placeholder="Ej. San Felipe, Miraflores..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold text-slate-900 focus:border-rimac-red outline-none" oninput="filterClinics()">
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID DE RESULTADOS DE CLÍNICAS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="clinicsGrid"></div>
+    </section>
+
+    <!-- SECCIÓN 6: CENTRO DE DOCUMENTOS Y DESCARGAS (9 Archivos) -->
+    <section id="content-docs" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-2">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-rimac-red uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full">
+              <i class="fa-solid fa-folder-tree mr-1"></i> Repositorio Oficial
+            </span>
+            <h3 class="text-xl font-black text-slate-900 mt-2">Documentos de Salud y Servicios RIMAC</h3>
+          </div>
+          <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">9 Archivos Oficiales</span>
+        </div>
+        <p class="text-xs text-slate-500">
+          Consulta las cartillas informativas y folletos oficiales (incluyendo los 3 planes de Enfermedades Graves IEG). Haz clic en **Vista Previa** para leer el documento en pantalla o **Descargar**.
+        </p>
+      </div>
+
+      <!-- GRID DE DOCUMENTOS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="docsGrid"></div>
+    </section>
+
+    <!-- BARRA DE EXPORTACIÓN A PDF -->
+    <div class="bg-rimac-gradient text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div class="space-y-1">
+        <span class="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Documento Oficial</span>
+        <h3 class="text-xl font-black">Exportar Cotización PDF Ajustada</h3>
+        <p class="text-xs text-red-100 max-w-xl">
+          Descarga la propuesta en formato A4 perfecto, incluyendo únicamente los planes de salud que hayas seleccionado.
+        </p>
+      </div>
+      <button onclick="exportToPDF()" class="w-full sm:w-auto bg-white text-rimac-red font-black py-4 px-8 rounded-2xl shadow-lg hover:bg-slate-100 transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+        <i class="fa-solid fa-file-pdf text-lg"></i>
+        <span>Descargar Propuesta PDF</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- MODAL DE VISTA PREVIA DE DOCUMENTOS PDF -->
+  <div id="previewModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex justify-center items-center p-4 hidden">
+    <div class="bg-white rounded-3xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
+      <div class="bg-rimac-gradient text-white px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-file-pdf text-2xl text-yellow-300"></i>
+          <div>
+            <h4 id="modalDocTitle" class="text-base font-extrabold">Vista Previa del Documento</h4>
+            <p id="modalDocCategory" class="text-[11px] text-red-100">Documento Informativo RIMAC</p>
+          </div>
+        </div>
+        <button onclick="closePreviewModal()" class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="flex-grow bg-slate-100 relative p-2">
+        <iframe id="pdfIframe" class="w-full h-full rounded-2xl border border-slate-200" src=""></iframe>
+      </div>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
+        <p class="text-xs text-slate-500 font-medium">RIMAC Seguros y Reaseguros S.A.</p>
+        <div class="flex space-x-3">
+          <button onclick="closePreviewModal()" class="px-5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition">
+            Cerrar
+          </button>
+          <a id="modalDownloadBtn" href="#" download class="px-5 py-2.5 rounded-xl bg-rimac-red text-white text-xs font-bold hover:bg-rimac-darkred transition flex items-center space-x-2">
+            <i class="fa-solid fa-download"></i>
+            <span>Descargar PDF</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-auto border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>© 2026 RIMAC Seguros y Reaseguros S.A. | Herramienta Exclusiva para Asesores Comerciales</p>
+    </div>
+  </footer>
+
+  <!-- PLANTILLA OCULTA PARA PDF EXACTO DE 1 SOLA HOJA A4 -->
+  <div style="display: none;">
+    <div id="pdfPrintContainer">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #D31411; padding-bottom: 8px; margin-bottom: 10px;">
+        <div>
+          <div style="font-size: 24px; font-weight: 900; color: #D31411; letter-spacing: -1px; line-height: 1;">RIMAC</div>
+          <div style="font-size: 8px; font-weight: 700; color: #475569; margin-top: 2px;">SEGUROS Y REASEGUROS S.A.</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 10px; font-weight: 800; color: #0F172A;" id="pdfNumCot">COTIZACIÓN N° RMC-2026-8921</div>
+          <div style="font-size: 8.5px; color: #64748B; margin-top: 1px;" id="pdfFechaEmision">Fecha de Emisión: 10/10/2026</div>
+          <div style="font-size: 8.5px; color: #D31411; font-weight: 700; margin-top: 1px;">Vigencia: 15 días calendario</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 8px; border-radius: 6px; margin-bottom: 12px;">
+        <div style="flex: 1;">
+          <div style="font-size: 8.5px; font-weight: 800; color: #D31411; text-transform: uppercase; margin-bottom: 3px; border-bottom: 1px solid #CBD5E1; padding-bottom: 2px;">Información del Cliente</div>
+          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Cliente:</strong> <span id="pdfValCliente">Jimena Esquivel</span></div>
+          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Grupo Familiar:</strong> <span id="pdfValGrupo">Titular (35 años)</span></div>
+          <div style="font-size: 9px;"><strong>Contacto:</strong> <span id="pdfValContacto">-</span></div>
+        </div>
+        <div style="flex: 1; border-left: 1px solid #CBD5E1; padding-left: 10px;">
+          <div style="font-size: 8.5px; font-weight: 800; color: #D31411; text-transform: uppercase; margin-bottom: 3px; border-bottom: 1px solid #CBD5E1; padding-bottom: 2px;">Asesor Comercial</div>
+          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Asesor:</strong> <span id="pdfValAsesor">Carlos Ruiz</span></div>
+          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Móvil:</strong> <span id="pdfValTelefono">960778888</span></div>
+          <div style="font-size: 9px;"><strong>Correo:</strong> <span id="pdfValCorreo">carlos.ruizc@rimac.com.pe</span></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <div style="font-size: 10px; font-weight: 800; color: #0F172A; text-transform: uppercase; margin-bottom: 6px; border-left: 3px solid #D31411; padding-left: 6px;" id="pdfTituloProducto">
+          Propuesta Comercial de Seguro
+        </div>
+        <div id="pdfBodyTable" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;"></div>
+      </div>
+
+      <div style="background: #FFF1F1; border: 1px solid #FECDD3; padding: 8px; border-radius: 6px; margin-bottom: 10px;">
+        <div style="font-size: 9px; font-weight: 800; color: #D31411; margin-bottom: 2px;">BENEFICIOS INCLUIDOS EN LA COBERTURA:</div>
+        <ul style="font-size: 8px; color: #334155; padding-left: 12px; margin: 0; line-height: 1.3;">
+          <li>Atención ambulatoria y hospitalaria en la red de clínicas a nivel nacional.</li>
+          <li>Chequeos preventivos anuales al 100% de cobertura según póliza.</li>
+          <li>Atención de emergencias médicas y accidentes las 24 horas del día.</li>
+        </ul>
+      </div>
+
+      <div style="text-align: center; font-size: 7.5px; color: #94A3B8; border-top: 1px solid #E2E8F0; padding-top: 6px;">
+        RIMAC Seguros y Reaseguros S.A. | Av. Paseo de la República 3505, San Isidro, Lima | Central: (01) 411-1111
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TARIFAS OFICIALES Y DOCUMENTOS (9 ARCHIVOS)
+    const RATES_MODULARES = [
+      { min: 0,  max: 5,  pref: 4418.03, vital: 2162.00, medica: 5004.55 },
+      { min: 6,  max: 15, pref: 4418.03, vital: 2162.00, medica: 5004.55 },
+      { min: 16, max: 20, pref: 4418.03, vital: 2162.00, medica: 5004.55 },
+      { min: 21, max: 25, pref: 4418.03, vital: 2259.26, medica: 5004.55 },
+      { min: 26, max: 30, pref: 4859.00, vital: 2739.32, medica: 6542.10 },
+      { min: 31, max: 50, pref: 8287.12, vital: 4818.82, medica: 11847.32 },
+      { min: 51, max: 99, pref: 28544.66, vital: 18492.93, medica: 41669.30 }
+    ];
+
+    const RATES_ORO = [
+      { min: 50, max: 55, oro: 7800.00 },
+      { min: 56, max: 60, oro: 9400.00 },
+      { min: 61, max: 65, oro: 12500.00 },
+      { min: 66, max: 70, oro: 16800.00 },
+      { min: 71, max: 99, oro: 24500.00 }
+    ];
+
+    const CLINICS_DATABASE = [
+      { name: 'Clínica Delgado', district: 'Miraflores', plans: ['Red Médica', 'Red Preferente'], specialties: ['Cardiología', 'Oncología', 'Pediatría', 'Emergencias 24h', 'Maternidad'] },
+      { name: 'Clínica Anglo Americana', district: 'San Isidro', plans: ['Red Médica', 'Red Preferente'], specialties: ['Cardiología', 'Oncología', 'Pediatría', 'Emergencias 24h', 'Maternidad'] },
+      { name: 'Clínica San Felipe', district: 'Jesús María', plans: ['Red Médica', 'Red Preferente', 'Salud de Oro'], specialties: ['Cardiología', 'Pediatría', 'Geriatría', 'Emergencias 24h', 'Maternidad'] },
+      { name: 'Clínica Internacional', district: 'Cercado de Lima / San Borja', plans: ['Red Preferente', 'Plan Vital', 'Salud de Oro'], specialties: ['Cardiología', 'Oncología', 'Pediatría', 'Geriatría', 'Emergencias 24h'] },
+      { name: 'Clínica San Pablo', district: 'Surco', plans: ['Red Preferente', 'Plan Vital', 'Salud de Oro', 'Salud Flexible'], specialties: ['Pediatría', 'Geriatría', 'Emergencias 24h', 'Maternidad'] },
+      { name: 'Clínica Ricardo Palma', district: 'San Antonio / Miraflores', plans: ['Red Preferente', 'Plan Vital', 'Salud Flexible'], specialties: ['Cardiología', 'Pediatría', 'Emergencias 24h', 'Oncología'] },
+      { name: 'Clínica Good Hope', district: 'Miraflores', plans: ['Red Preferente', 'Plan Vital', 'Salud de Oro'], specialties: ['Cardiología', 'Pediatría', 'Geriatría', 'Emergencias 24h'] },
+      { name: 'Clínica Javier Prado', district: 'San Isidro', plans: ['Plan Vital', 'Salud Flexible', 'Salud de Oro'], specialties: ['Geriatría', 'Pediatría', 'Emergencias 24h'] }
+    ];
+
+    const DOCUMENTS_LIST = [
+      {
+        id: 'red-medica',
+        title: 'Seguro Red Médica',
+        category: 'Salud Modular',
+        file: 'Red Médica.pdf',
+        sa: 'S/ 5,000,000',
+        icon: 'fa-hospital',
+        desc: 'Cobertura médica de alta gama con acceso a la red de clínicas más completa del país, maternidad, oncología 100% y asistencia internacional.'
+      },
+      {
+        id: 'red-preferente',
+        title: 'Seguro Red Preferente',
+        category: 'Salud Modular',
+        file: 'Red Preferente.pdf',
+        sa: 'S/ 3,200,000',
+        icon: 'fa-heart-pulse',
+        desc: 'El seguro más vendido de RIMAC. Excelente equilibrio entre costo mensual y cobertura preferencial en clínicas top a nivel nacional.'
+      },
+      {
+        id: 'plan-vital',
+        title: 'Seguro Plan Vital',
+        category: 'Salud Modular',
+        file: 'CARTILLA PLAN VITAL.pdf',
+        sa: 'S/ 2,000,000',
+        icon: 'fa-notes-medical',
+        desc: 'La alternativa más económica en seguros de salud con respaldo integral para consultas, urgencias y atenciones hospitalarias.'
+      },
+      {
+        id: 'salud-flexible',
+        title: 'Salud Flexible 2025',
+        category: 'Salud Personalizable',
+        file: 'CARTILLA SALUD FLEXIBLE INFOSALUD 2025 (1).pdf',
+        sa: 'S/ 1,000,000',
+        icon: 'fa-sliders',
+        desc: 'Diseñado por ti. Plan base para consultas en casa o clínicas con opción de añadir 6 coberturas independientes según tu presupuesto.'
+      },
+      {
+        id: 'ieg-plan1',
+        title: 'Enfermedades Graves - Plan 1 (12 Enf.)',
+        category: 'Indemnizatorio',
+        file: 'IEG 12 - Plan 1 - 12 enfermedades (1)_2.pdf',
+        sa: 'S/ 50,000 (S/ 100/mes)',
+        icon: 'fa-hand-holding-medical',
+        desc: 'Indemnización en efectivo ante el diagnóstico de cualquiera de las 12 enfermedades graves cubiertas + asistencias médicas.'
+      },
+      {
+        id: 'ieg-plan2',
+        title: 'Enfermedades Graves - Plan 2 (8 Enf.)',
+        category: 'Indemnizatorio',
+        file: 'IEG 12 - Plan 2 - 8 enfermedades (1)_2.pdf',
+        sa: 'S/ 50,000 (S/ 80/mes)',
+        icon: 'fa-hand-holding-medical',
+        desc: 'Indemnización en efectivo ante el diagnóstico de cualquiera de las 8 enfermedades graves principales + asistencias médicas.'
+      },
+      {
+        id: 'ieg-plan3',
+        title: 'Enfermedades Graves - Plan 3 (6 Enf.)',
+        category: 'Indemnizatorio',
+        file: 'IEG 12 - Plan 3 - 6 enfermedades (1)_2.pdf',
+        sa: 'S/ 50,000 (S/ 60/mes)',
+        icon: 'fa-hand-holding-medical',
+        desc: 'Indemnización en efectivo ante el diagnóstico de cualquiera de las 6 enfermedades graves esenciales + asistencias médicas.'
+      },
+      {
+        id: 'sepelio-plus',
+        title: 'Seguro Sepelio Plus',
+        category: 'Protección Familiar',
+        file: 'SEPELIO PLUS.pdf',
+        sa: 'Hasta S/ 30,000',
+        icon: 'fa-ribbon',
+        desc: 'Cuidado y tranquilidad para tu familia con indemnización por fallecimiento y cobertura de servicios funerarios completos.'
+      },
+      {
+        id: 'beneficios-vida',
+        title: 'Beneficios Vida Plan Plus',
+        category: 'Beneficios Adicionales',
+        file: 'Beneficios Vida Plan Plus.pdf',
+        sa: 'Servicios Gratis & Descuentos',
+        icon: 'fa-gem',
+        desc: 'Programa de asistencias exclusivas para asegurados de Vida: telemedicina, auxilio mecánico, cerrajería, gasfitería y pet care.'
+      }
+    ];
+
+    function formatPEN(val) {
+      return new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(val);
+    }
+
+    function switchTab(tab) {
+      ['modulares', 'oro', 'flexible', 'futuro', 'clinicas', 'docs'].forEach(t => {
+        document.getElementById(`content-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}`).classList.remove('active');
+        document.getElementById(`tab-${t}`).classList.add('text-slate-500');
+      });
+
+      document.getElementById(`content-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      document.getElementById(`tab-${tab}`).classList.remove('text-slate-500');
+
+      if (tab === 'modulares') calcModulares();
+      if (tab === 'oro') calcOro();
+      if (tab === 'flexible') calcFlexible();
+      if (tab === 'futuro') calcFuturo();
+      if (tab === 'clinicas') renderClinicsGrid(CLINICS_DATABASE);
+      if (tab === 'docs') renderDocumentsGrid();
+    }
+
+    function toggleDetails(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    // RENDERIZAR BUSCADOR DE CLÍNICAS
+    function renderClinicsGrid(list) {
+      const grid = document.getElementById('clinicsGrid');
+      grid.innerHTML = '';
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="col-span-3 text-center py-10 text-slate-400 text-xs font-semibold">No se encontraron clínicas con los filtros seleccionados.</div>`;
+        return;
+      }
+
+      list.forEach(c => {
+        let plansBadges = c.plans.map(p => `<span class="bg-red-50 text-rimac-red text-[9px] font-bold px-2 py-0.5 rounded-full">${p}</span>`).join(' ');
+        let specsBadges = c.specialties.map(s => `<span class="bg-slate-100 text-slate-700 text-[9px] font-semibold px-2 py-0.5 rounded-full">${s}</span>`).join(' ');
+
+        grid.innerHTML += `
+          <div class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm card-hover flex flex-col justify-between space-y-4">
+            <div class="space-y-2.5">
+              <div class="flex justify-between items-start">
+                <div class="w-10 h-10 rounded-2xl bg-red-50 text-rimac-red flex items-center justify-center text-lg font-black">
+                  <i class="fa-solid fa-hospital"></i>
+                </div>
+                <span class="text-[11px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-full"><i class="fa-solid fa-location-dot text-rimac-red mr-1"></i>${c.district}</span>
+              </div>
+              <h4 class="text-base font-black text-slate-900">${c.name}</h4>
+              
+              <div class="space-y-1 pt-1">
+                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Planes Afiliados:</span>
+                <div class="flex flex-wrap gap-1">${plansBadges}</div>
+              </div>
+
+              <div class="space-y-1 pt-1">
+                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Especialidades Destacadas:</span>
+                <div class="flex flex-wrap gap-1">${specsBadges}</div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 text-right">
+              <span class="text-[10px] font-bold text-emerald-600"><i class="fa-solid fa-circle-check mr-1"></i> Convenio Activo RIMAC</span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function filterClinics() {
+      const planVal = document.getElementById('filterPlan').value;
+      const specVal = document.getElementById('filterSpecialty').value;
+      const textVal = document.getElementById('searchClinicText').value.toLowerCase();
+
+      const filtered = CLINICS_DATABASE.filter(c => {
+        const matchPlan = planVal === 'todos' || c.plans.includes(planVal);
+        const matchSpec = specVal === 'todos' || c.specialties.includes(specVal);
+        const matchText = c.name.toLowerCase().includes(textVal) || c.district.toLowerCase().includes(textVal);
+        return matchPlan && matchSpec && matchText;
+      });
+
+      renderClinicsGrid(filtered);
+    }
+
+    // CARGAR CENTRO DE DOCUMENTOS
+    function renderDocumentsGrid() {
+      const grid = document.getElementById('docsGrid');
+      grid.innerHTML = '';
+
+      DOCUMENTS_LIST.forEach(doc => {
+        grid.innerHTML += `
+          <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm card-hover flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex justify-between items-start">
+                <div class="w-12 h-12 rounded-2xl bg-red-50 text-rimac-red flex items-center justify-center text-xl font-black">
+                  <i class="fa-solid ${doc.icon}"></i>
+                </div>
+                <span class="bg-slate-100 text-slate-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase">${doc.category}</span>
+              </div>
+              <div>
+                <h4 class="text-base font-black text-slate-900">${doc.title}</h4>
+                <p class="text-xs text-slate-500 font-semibold mt-0.5"><i class="fa-solid fa-shield-halved text-rimac-red mr-1"></i> Max: ${doc.sa}</p>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">${doc.desc}</p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center space-x-2">
+              <button onclick="openPreviewModal('${doc.title}', '${doc.category}', '${doc.file}')" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5">
+                <i class="fa-solid fa-eye text-slate-600"></i>
+                <span>Vista Previa</span>
+              </button>
+              <a href="${doc.file}" download class="flex-1 bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-bold py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5">
+                <i class="fa-solid fa-download"></i>
+                <span>Descargar</span>
+              </a>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // MODAL DE VISTA PREVIA
+    function openPreviewModal(title, category, file) {
+      document.getElementById('modalDocTitle').innerText = title;
+      document.getElementById('modalDocCategory').innerText = category;
+      document.getElementById('pdfIframe').src = file;
+      document.getElementById('modalDownloadBtn').href = file;
+      document.getElementById('previewModal').classList.remove('hidden');
+    }
+
+    function closePreviewModal() {
+      document.getElementById('previewModal').classList.add('hidden');
+      document.getElementById('pdfIframe').src = '';
+    }
+
+    function getRateForAge(age, type) {
+      const match = RATES_MODULARES.find(r => age >= r.min && age <= r.max) || RATES_MODULARES[RATES_MODULARES.length - 1];
+      return match[type];
+    }
+
+    // CÁLCULO SALUD MODULARES (Vital, Red Preferente, Red Médica) CON CHECKBOXES PARA PDF
+    function calcModulares() {
+      const ageTitular = parseInt(document.getElementById('modAgeTitular').value) || 0;
+      const ageConyugue = parseInt(document.getElementById('modAgeConyugue').value);
+      const depsInput = document.getElementById('modAgeDeps').value;
+      const quotas = parseInt(document.getElementById('modQuotas').value) || 12;
+      const discPct = (parseFloat(document.getElementById('modDiscount').value) || 0) / 100;
+
+      let ages = [ageTitular];
+      if (!isNaN(ageConyugue)) ages.push(ageConyugue);
+      if (depsInput.trim() !== '') {
+        depsInput.split(',').forEach(d => {
+          const parsed = parseInt(d.trim());
+          if (!isNaN(parsed)) ages.push(parsed);
+        });
+      }
+
+      let totalPref = 0, totalVital = 0, totalMedica = 0;
+      ages.forEach(a => {
+        totalPref += getRateForAge(a, 'pref');
+        totalVital += getRateForAge(a, 'vital');
+        totalMedica += getRateForAge(a, 'medica');
+      });
+
+      const grid = document.getElementById('modularesResults');
+      grid.innerHTML = '';
+
+      const plans = [
+        { 
+          id: 'det-pref',
+          key: 'pref',
+          name: 'Red Preferente', 
+          code: 'Plan 228635', 
+          base: totalPref, 
+          badge: 'Más Vendido',
+          sa: 'S/ 3,200,000',
+          amb: 'Copago S/ 55 a S/ 65',
+          hosp: 'Cubierto al 80%',
+          desc: 'Excelente balance costo-beneficio. Clínica Internacional, San Felipe, Tezza, San Pablo y más.'
+        },
+        { 
+          id: 'det-vital',
+          key: 'vital',
+          name: 'Plan Vital', 
+          code: 'Plan 225459', 
+          base: totalVital, 
+          badge: 'Económico',
+          sa: 'S/ 2,000,000',
+          amb: 'Copago S/ 40 a S/ 60',
+          hosp: 'Cubierto al 80%',
+          desc: 'La cobertura ideal para proteger al grupo familiar a un precio sumamente accesible.'
+        },
+        { 
+          id: 'det-medica',
+          key: 'medica',
+          name: 'Red Médica', 
+          code: 'Plan 228643', 
+          base: totalMedica, 
+          badge: 'Cobertura Amplia',
+          sa: 'S/ 5,000,000',
+          amb: 'Copago S/ 45 a S/ 50',
+          hosp: 'Cubierto al 90%-95%',
+          desc: 'Acceso total sin límites a la red más exclusiva de clínicas incluyendo Clínica Delgado y Angloamericana.'
+        }
+      ];
+
+      plans.forEach(p => {
+        const ahorro = p.base * discPct;
+        const finalAnnual = p.base - ahorro;
+        const cuota = Math.ceil(finalAnnual / quotas);
+
+        grid.innerHTML += `
+          <div class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm card-hover space-y-4 plan-card" data-plankey="${p.key}">
+            <div class="flex justify-between items-start">
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="chk-${p.key}" class="w-4 h-4 text-rimac-red rounded accent-red-600 cursor-pointer" checked title="Incluir en el PDF">
+                <div>
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${p.code}</span>
+                  <h4 class="text-base font-black text-slate-900">${p.name}</h4>
+                </div>
+              </div>
+              <span class="bg-red-50 text-rimac-red text-[9px] font-bold px-2 py-0.5 rounded-full">${p.badge}</span>
+            </div>
+
+            <div class="space-y-1.5 text-xs border-t border-slate-100 pt-2.5">
+              <div class="flex justify-between text-slate-500">
+                <span>Prima Base (${ages.length} pers):</span>
+                <span class="font-bold">${formatPEN(p.base)}</span>
+              </div>
+              ${discPct > 0 ? `
+              <div class="flex justify-between text-emerald-600 font-bold">
+                <span>Ahorro (${discPct*100}% Desc):</span>
+                <span>-${formatPEN(ahorro)}</span>
+              </div>` : ''}
+              <div class="flex justify-between text-slate-900 font-black border-t border-slate-100 pt-1.5">
+                <span>Prima Final Anual:</span>
+                <span class="text-rimac-red text-xs">${formatPEN(finalAnnual)}</span>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-red-50 to-orange-50 p-3.5 rounded-2xl border border-red-100 text-center">
+              <span class="text-[9px] font-extrabold text-rimac-red uppercase tracking-wider">${quotas} Cuotas Mensuales de</span>
+              <p class="text-2xl font-black text-rimac-red mt-0.5">S/ ${cuota}.00</p>
+            </div>
+
+            <!-- BOTÓN RESUMEN CARACTERÍSTICAS -->
+            <div>
+              <button onclick="toggleDetails('${p.id}')" class="w-full text-center text-xs font-bold text-slate-600 hover:text-rimac-red transition py-1 flex items-center justify-center space-x-1">
+                <span>Ver Resumen del Seguro</span>
+                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+              </button>
+              
+              <div id="${p.id}" class="hidden mt-2 bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs space-y-1.5 text-slate-700">
+                <p><strong>Suma Asegurada:</strong> ${p.sa} anual/persona</p>
+                <p><strong>Ambulatorio:</strong> ${p.amb}</p>
+                <p><strong>Hospitalización:</strong> ${p.hosp}</p>
+                <p class="text-slate-500 text-[10px] pt-1 border-t border-slate-200">${p.desc}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // CÁLCULO SEGURO SALUD DE ORO (Aparte)
+    function calcOro() {
+      const age = parseInt(document.getElementById('oroAge').value) || 65;
+      const quotas = parseInt(document.getElementById('oroQuotas').value) || 12;
+      const discPct = (parseFloat(document.getElementById('oroDiscount').value) || 0) / 100;
+
+      const match = RATES_ORO.find(r => age >= r.min && age <= r.max) || RATES_ORO[RATES_ORO.length - 1];
+      const base = match.oro;
+      const ahorro = base * discPct;
+      const finalAnnual = base - ahorro;
+      const cuota = Math.ceil(finalAnnual / quotas);
+
+      const grid = document.getElementById('oroResults');
+      grid.innerHTML = `
+        <div class="bg-white rounded-3xl border border-amber-200 p-6 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <span class="text-[10px] font-bold text-amber-600 uppercase tracking-wider bg-amber-50 px-3 py-1 rounded-full">Exclusivo Adulto Mayor (50+ años)</span>
+              <h4 class="text-xl font-black text-slate-900 mt-2">Seguro Salud de Oro</h4>
+            </div>
+            <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-3 py-1 rounded-full">Suma Asegurada: S/ 2,500,000</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div class="space-y-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-100">
+              <div class="flex justify-between text-slate-600">
+                <span>Prima Base Anual (Edad ${age}):</span>
+                <span class="font-bold">${formatPEN(base)}</span>
+              </div>
+              ${discPct > 0 ? `
+              <div class="flex justify-between text-emerald-600 font-bold border-t border-slate-200 pt-2">
+                <span>Descuento Comercial (${discPct*100}%):</span>
+                <span>-${formatPEN(ahorro)}</span>
+              </div>` : ''}
+              <div class="flex justify-between text-slate-900 font-black text-sm border-t border-slate-200 pt-2">
+                <span>Prima Final Anual:</span>
+                <span class="text-amber-600">${formatPEN(finalAnnual)}</span>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-2xl border border-amber-200 flex flex-col justify-center items-center text-center">
+              <span class="text-xs font-extrabold text-amber-800 uppercase tracking-wider">${quotas} Cuotas Mensuales de</span>
+              <p class="text-4xl font-black text-amber-600 mt-1">S/ ${cuota}.00</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // CÁLCULO SALUD FLEXIBLE
+    function calcFlexible() {
+      const quotas = parseInt(document.getElementById('flexQuotas').value) || 12;
+      const discPct = (parseFloat(document.getElementById('flexDiscount').value) || 0) / 100;
+
+      let totalBase = 1880.28;
+      let adicSum = 0;
+
+      if (document.getElementById('chkA1').checked) adicSum += 120.00;
+      if (document.getElementById('chkA2').checked) adicSum += 120.00;
+      if (document.getElementById('chkA3').checked) adicSum += 592.72;
+      if (document.getElementById('chkA4').checked) adicSum += 120.00;
+      if (document.getElementById('chkA5').checked) adicSum += 300.00;
+      if (document.getElementById('chkA6').checked) adicSum += 300.00;
+
+      const subtotalAnual = totalBase + adicSum;
+      const ahorro = subtotalAnual * discPct;
+      const finalAnnual = subtotalAnual - ahorro;
+      const cuota = Math.ceil(finalAnnual / quotas);
+
+      const grid = document.getElementById('flexibleResults');
+      grid.innerHTML = `
+        <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Código Plan 224759</span>
+              <h4 class="text-xl font-black text-slate-900">Salud Flexible (Personalizado)</h4>
+            </div>
+            <span class="bg-red-50 text-rimac-red text-xs font-extrabold px-3 py-1 rounded-full">Suma Asegurada: S/ 1,000,000</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div class="space-y-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-100">
+              <div class="flex justify-between text-slate-600">
+                <span>Prima Base (Casa + Clínicas):</span>
+                <span class="font-bold">${formatPEN(totalBase)}</span>
+              </div>
+              <div class="flex justify-between text-slate-600">
+                <span>Adicionales Seleccionados:</span>
+                <span class="font-bold">${formatPEN(adicSum)}</span>
+              </div>
+              ${discPct > 0 ? `
+              <div class="flex justify-between text-emerald-600 font-bold border-t border-slate-200 pt-2">
+                <span>Descuento Comercial (${discPct*100}%):</span>
+                <span>-${formatPEN(ahorro)}</span>
+              </div>` : ''}
+              <div class="flex justify-between text-slate-900 font-black text-sm border-t border-slate-200 pt-2">
+                <span>Prima Final Anual:</span>
+                <span class="text-rimac-red">${formatPEN(finalAnnual)}</span>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-2xl border border-red-100 flex flex-col justify-center items-center text-center">
+              <span class="text-xs font-extrabold text-rimac-red uppercase tracking-wider">${quotas} Cuotas Mensuales de</span>
+              <p class="text-4xl font-black text-rimac-red mt-1">S/ ${cuota}.00</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // CÁLCULO VIDA FUTURO GARANTIZADO
+    function calcFuturo() {
+      const returnPct = parseFloat(document.getElementById('futReturn').value) || 1.25;
+      const sa = parseFloat(document.getElementById('futSA').value) || 100000;
+      
+      const cuotaMensual = 488.62;
+      const totalAportado = cuotaMensual * 12 * 12;
+      const refundAmount = totalAportado * returnPct;
+
+      const grid = document.getElementById('futuroResults');
+      grid.innerHTML = `
+        <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Código Plan PAH 10</span>
+              <h4 class="text-xl font-black text-slate-900">Vida Futuro Garantizado</h4>
+            </div>
+            <span class="bg-emerald-50 text-emerald-700 text-xs font-extrabold px-3 py-1 rounded-full">Ahorro con Devolución</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+              <span class="text-slate-500 font-bold block mb-1">Aporte Mensual</span>
+              <p class="text-2xl font-black text-slate-900">S/ 488.62</p>
+              <span class="text-[10px] text-slate-400 font-medium">Durante 12 años</span>
+            </div>
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+              <span class="text-slate-500 font-bold block mb-1">Protección por Muerte</span>
+              <p class="text-2xl font-black text-slate-900">${formatPEN(sa)}</p>
+              <span class="text-[10px] text-slate-400 font-medium">Cobertura desde Día 1</span>
+            </div>
+            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200">
+              <span class="text-emerald-800 font-bold block mb-1">Devolución (${returnPct*100}%)</span>
+              <p class="text-2xl font-black text-emerald-700">${formatPEN(refundAmount)}</p>
+              <span class="text-[10px] text-emerald-600 font-bold">Retorno al finalizar periodo</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // EXPORTACIÓN A PDF EXACTA DE 1 PÁGINA A4 (FILTRANDO SOLO LOS SELECCIONADOS EN MODULARES)
+    function exportToPDF() {
+      document.getElementById('pdfValCliente').innerText = document.getElementById('clientName').value || 'Jimena Esquivel';
+      
+      const ageTitular = document.getElementById('modAgeTitular').value || '35';
+      const ageConyugue = document.getElementById('modAgeConyugue').value;
+      const depsInput = document.getElementById('modAgeDeps').value;
+      
+      let grupoText = `Titular (${ageTitular}a)`;
+      if (ageConyugue) grupoText += `, Cónyuge (${ageConyugue}a)`;
+      if (depsInput) grupoText += `, Dep: (${depsInput})`;
+      document.getElementById('pdfValGrupo').innerText = grupoText;
+
+      document.getElementById('pdfValContacto').innerText = `${document.getElementById('clientPhone').value || ''} ${document.getElementById('clientEmail').value || ''}`.trim() || '-';
+
+      document.getElementById('pdfValAsesor').innerText = document.getElementById('agentName').value || 'Carlos Ruiz';
+      document.getElementById('pdfValTelefono').innerText = document.getElementById('agentPhone').value || '960778888';
+      document.getElementById('pdfValCorreo').innerText = document.getElementById('agentEmail').value || 'carlos.ruizc@rimac.com.pe';
+
+      document.getElementById('pdfFechaEmision').innerText = `Fecha de Emisión: ${new Date().toLocaleDateString('es-PE')}`;
+
+      const activeTab = document.querySelector('.tab-btn.active').id;
+      let activeContentHtml = '';
+
+      if (activeTab === 'tab-modulares') {
+        document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguros de Salud Modulares';
+        
+        // Recoger solo las tarjetas de planes seleccionados mediante checkbox
+        const cards = document.querySelectorAll('.plan-card');
+        let selectedHtml = '';
+        cards.forEach(card => {
+          const key = card.getAttribute('data-plankey');
+          const chk = document.getElementById(`chk-${key}`);
+          if (chk && chk.checked) {
+            // Clonar HTML de la tarjeta sin el checkbox ni el botón de detalles colapsado
+            const clone = card.cloneNode(true);
+            const chkEl = clone.querySelector('input[type="checkbox"]');
+            if (chkEl) chkEl.remove();
+            const btnEl = clone.querySelector('button');
+            if (btnEl) btnEl.remove();
+            const detailsEl = clone.querySelector('[id^="det-"]');
+            if (detailsEl) detailsEl.classList.remove('hidden'); // Asegurar visible en PDF
+            selectedHtml += `<div style="background: white; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px;">${clone.innerHTML}</div>`;
+          }
+        });
+        
+        if (selectedHtml === '') {
+          alert('Por favor selecciona al menos un plan modular para exportar en el PDF.');
+          return;
+        }
+        
+        document.getElementById('pdfBodyTable').style.gridTemplateColumns = `repeat(${Math.min(3, document.querySelectorAll('.plan-card input[type="checkbox"]:checked').length || 1)}, 1fr)`;
+        activeContentHtml = selectedHtml;
+
+      } else if (activeTab === 'tab-oro') {
+        document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguro Salud de Oro (Adulto Mayor)';
+        document.getElementById('pdfBodyTable').style.gridTemplateColumns = '1fr';
+        activeContentHtml = document.getElementById('oroResults').innerHTML;
+      } else if (activeTab === 'tab-flexible') {
+        document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguro Salud Flexible';
+        document.getElementById('pdfBodyTable').style.gridTemplateColumns = '1fr';
+        activeContentHtml = document.getElementById('flexibleResults').innerHTML;
+      } else if (activeTab === 'tab-futuro') {
+        document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguro Vida Futuro Garantizado';
+        document.getElementById('pdfBodyTable').style.gridTemplateColumns = '1fr';
+        activeContentHtml = document.getElementById('futuroResults').innerHTML;
+      }
+
+      document.getElementById('pdfBodyTable').innerHTML = activeContentHtml;
+
+      const element = document.getElementById('pdfPrintContainer');
+      const opt = {
+        margin:       0,
+        filename:     `Cotizacion_RIMAC_${new Date().getTime()}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+
+    // Inicializar la app
+    window.onload = () => switchTab('modulares');
+  </script>
+</body>
+</html>
