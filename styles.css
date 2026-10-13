@@ -1,0 +1,51 @@
+/* ==========================================
+   ESTILOS GENERALES Y CONFIGURACIÓN BASE
+   ========================================== */
+body { 
+  background-color: #F8FAFC; 
+  font-family: 'Inter', sans-serif; 
+}
+
+/* GRADIENTE CORPORATIVO RIMAC */
+.bg-rimac-gradient { 
+  background: linear-gradient(135deg, #D31411 0%, #9B0B09 100%); 
+}
+
+/* ==========================================
+   ESTADOS Y BOTONES DE PESTAÑAS (TABS)
+   ========================================== */
+.tab-btn { 
+  transition: all 0.25s ease-in-out; 
+}
+
+.tab-btn.active {
+  background: #D31411;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(211, 20, 17, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   EFECTOS EN TARJETAS (CARDS HOVER)
+   ========================================== */
+.card-hover { 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.card-hover:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12); 
+}
+
+/* ==========================================
+   CONTENEDOR DE IMPRESIÓN PARA EXPORTAR A PDF
+   ========================================== */
+#pdfPrintContainer {
+  width: 210mm;
+  padding: 10mm 12mm;
+  background: white;
+  box-sizing: border-box;
+  font-size: 10px;
+  color: #0F172A;
+  margin: 0 auto;
+}
