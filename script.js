@@ -1615,19 +1615,15 @@ function downloadPDFFromPreview() {
         return;
     }
 
-    // 1. Forzamos el ancho ideal para mantener el diseño horizontal simétrico
+    // Forzamos el ancho ideal para mantener el diseño horizontal simétrico
     const originalWidth = modalBox.style.width;
     modalBox.style.width = '1100px';
     modalBox.style.maxWidth = 'none';
 
-    // 2. Medimos el ancho y alto real exacto que ocupa tu diseño en el DOM
-    const actualWidth = modalBox.scrollWidth || 1100;
-    const actualHeight = modalBox.scrollHeight || 650;
-
     const opt = {
-        margin:       0,   // Sin márgenes de relleno
+        margin:       0,   
         filename:     `Cotizacion_RIMAC_${new Date().getTime()}.pdf`,
-        image:        { type: 'jpeg', quality: 1.0 }, // Calidad máxima de imagen
+        image:        { type: 'jpeg', quality: 1.0 }, 
         html2canvas:  { 
             scale: 2,           
             useCORS: true,      
@@ -1639,10 +1635,10 @@ function downloadPDFFromPreview() {
             scrollY: 0,
             windowWidth: 1100
         },
-        // 🚀 LA JUGADA MAESTRA: Convertimos los píxeles exactos a milímetros para que el PDF 
-        // se recorte milimétricamente al tamaño exacto de tu contenido, sin dejar espacios vacíos.
-        jsPDF:        { unit: 'px', format: [actualWidth, actualHeight], orientation: 'landscape' },
-        pagebreak:    { mode: ['avoid-all'] }
+        // Volvemos a un formato horizontal estándar estricto pero optimizado,
+        // lo que evita que los visores móviles interpreten mal las dimensiones y creen páginas vacías.
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     html2pdf().set(opt).from(modalBox).save().then(() => {
