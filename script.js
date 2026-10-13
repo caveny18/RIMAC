@@ -1034,87 +1034,103 @@ function closePreviewModal() {
     document.getElementById('pdfIframe').src = '';
 }
 
-/* ==========================================================================
-   6. EXPORTACIÓN A PDF
-   ========================================================================== */
-
 function exportToPDF() {
-    document.getElementById('pdfValCliente').innerText = document.getElementById('clientName').value || 'Jimena Esquivel';
+    // 1. Rellenar los datos en el contenedor oculto
+    document.getElementById('pdfValCliente').innerText = document.getElementById('clientName').value || 'Cliente Rímac';
 
-    const ageTitular = document.getElementById('modAgeTitular').value || '35';
-    const ageConyugue = document.getElementById('modAgeConyugue').value;
-    const depsInput = document.getElementById('modAgeDeps').value;
+    const ageTitular = document.getElementById('modAgeTitular')?.value || '35';
+    const ageConyugue = document.getElementById('modAgeConyugue')?.value;
+    const depsInput = document.getElementById('modAgeDeps')?.value;
 
     let grupoText = `Titular (${ageTitular}a)`;
     if (ageConyugue) grupoText += `, Cónyuge (${ageConyugue}a)`;
     if (depsInput) grupoText += `, Dep: (${depsInput})`;
     document.getElementById('pdfValGrupo').innerText = grupoText;
 
-    document.getElementById('pdfValContacto').innerText = `${document.getElementById('clientPhone').value || ''} ${document.getElementById('clientEmail').value || ''}`.trim() || '-';
-
-    document.getElementById('pdfValAsesor').innerText = document.getElementById('agentName').value || 'Carlos Ruiz';
-    document.getElementById('pdfValTelefono').innerText = document.getElementById('agentPhone').value || '960778888';
-    document.getElementById('pdfValCorreo').innerText = document.getElementById('agentEmail').value || 'carlos.ruizc@rimac.com.pe';
-
+    document.getElementById('pdfValContacto').innerText = `${document.getElementById('clientPhone')?.value || ''} ${document.getElementById('clientEmail')?.value || ''}`.trim() || '-';
+    document.getElementById('pdfValAsesor').innerText = document.getElementById('agentName')?.value || 'Asesor Comercial Rímac';
+    document.getElementById('pdfValTelefono').innerText = document.getElementById('agentPhone')?.value || '411-1111';
+    document.getElementById('pdfValCorreo').innerText = document.getElementById('agentEmail')?.value || 'contacto@rimac.com.pe';
     document.getElementById('pdfFechaEmision').innerText = `Fecha de Emisión: ${new Date().toLocaleDateString('es-PE')}`;
 
-    const activeTab = document.querySelector('.tab-btn.active').id;
+    const activeTab = document.querySelector('.tab-btn.active')?.id || 'tab-modulares';
     let activeContentHtml = '';
 
     if (activeTab === 'tab-modulares') {
         document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguros de Salud Modulares';
-
-        const cards = document.querySelectorAll('.plan-card');
-        let selectedHtml = '';
-        cards.forEach(card => {
-            const key = card.getAttribute('data-plankey');
-            const chk = document.getElementById(`chk-${key}`);
-            if (chk && chk.checked) {
-                const clone = card.cloneNode(true);
-                const chkEl = clone.querySelector('input[type="checkbox"]');
-                if (chkEl) chkEl.remove();
-                const btnEl = clone.querySelector('button');
-                if (btnEl) btnEl.remove();
-                const detailsEl = clone.querySelector('[id^="det-"]');
-                if (detailsEl) detailsEl.classList.remove('hidden');
-                selectedHtml += `<div style="background: white; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px;">${clone.innerHTML}</div>`;
-            }
-        });
-
-        if (selectedHtml === '') {
-            alert('Por favor selecciona al menos un plan modular para exportar en el PDF.');
-            return;
-        }
-
-        document.getElementById('pdfBodyTable').style.gridTemplateColumns = `repeat(${Math.min(3, document.querySelectorAll('.plan-card input[type="checkbox"]:checked').length || 1)}, 1fr)`;
-        activeContentHtml = selectedHtml;
-
+        activeContentHtml = `
+            <div style="background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #9F1239; margin: 0 0 8px 0; font-size: 13px;">🛡️ Coberturas Principales Incluidas (Salud Modular)</h3>
+                <ul style="margin: 0; padding-left: 15px; font-size: 11px; color: #475569; line-height: 1.5;">
+                    <li><strong>Atención Ambulatoria y Hospitalaria:</strong> Cobertura a nivel nacional según red elegida[cite: 95, 96, 110].</li>
+                    <li><strong>Oncología Integral al 100%:</strong> Cobertura para tratamientos oncológicos, quimioterapia y radioterapia[cite: 119, 143].</li>
+                    <li><strong>Emergencias Accidentales y Médicas:</strong> 24/7 con continuidad de atenciones hasta por 90 días[cite: 96, 112].</li>
+                    <li><strong>Chequeo Preventivo Anual:</strong> Exámenes de laboratorio y evaluaciones según edad y género[cite: 100, 117].</li>
+                    <li><strong>Centro Médico Virtual y Médico a Domicilio:</strong> Atenciones prácticas desde casa[cite: 95, 110].</li>
+                </ul>
+            </div>
+        `;
     } else if (activeTab === 'tab-oro') {
         document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguro Salud de Oro (Adulto Mayor)';
-        document.getElementById('pdfBodyTable').style.gridTemplateColumns = '1fr';
-        activeContentHtml = document.getElementById('oroResults').innerHTML;
+        activeContentHtml = `
+            <div style="background: #FEFCE8; border: 1px solid #FEF08A; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #854D0E; margin: 0 0 8px 0; font-size: 13px;">⭐ Beneficios Exclusivos Salud de Oro</h3>
+                <ul style="margin: 0; padding-left: 15px; font-size: 11px; color: #475569; line-height: 1.5;">
+                    <li>Diseñado especialmente para la protección integral del adulto mayor.</li>
+                    <li>Acceso preferente en clínicas de la red con controles geriátricos especializados.</li>
+                    <li>Cobertura ambulatoria y hospitalaria con respaldo continuo.</li>
+                </ul>
+            </div>
+        `;
     } else if (activeTab === 'tab-flexible') {
         document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguro Salud Flexible';
-        document.getElementById('pdfBodyTable').style.gridTemplateColumns = '1fr';
-        activeContentHtml = document.getElementById('flexibleResults').innerHTML;
-    } else if (activeTab === 'tab-futuro') {
-        document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguro Vida Futuro Garantizado';
-        document.getElementById('pdfBodyTable').style.gridTemplateColumns = '1fr';
-        activeContentHtml = document.getElementById('futuroResults').innerHTML;
+        activeContentHtml = `
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #166534; margin: 0 0 8px 0; font-size: 13px;">⚙️ Coberturas a la Medida (Salud Flexible)</h3>
+                <ul style="margin: 0; padding-left: 15px; font-size: 11px; color: #475569; line-height: 1.5;">
+                    <li>Arma tu plan eligiendo exactamente lo que necesitas pagar.</li>
+                    <li>Consultas en especialidades en más de 200 clínicas a nivel nacional[cite: 89].</li>
+                    <li>Medicinas y exámenes derivados cubiertos al 70%[cite: 89].</li>
+                </ul>
+            </div>
+        `;
+    } else if (activeTab === 'tab-futuro' || activeTab === 'tab-ahorro') {
+        document.getElementById('pdfTituloProducto').innerText = 'Propuesta de Seguro Vida Futuro / Plan Plus (Ahorro y Asistencias)';
+        activeContentHtml = `
+            <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #1E40AF; margin: 0 0 8px 0; font-size: 13px;">💎 Beneficios Cliente Plus (Ahorro y Asistencias)</h3>
+                <ul style="margin: 0; padding-left: 15px; font-size: 11px; color: #475569; line-height: 1.5;">
+                    <li><strong>Asistencias Médicas:</strong> Orientación médica telefónica y telemedicina 100%, ambulancia y médico a domicilio.</li>
+                    <li><strong>Asistencias para el Hogar:</strong> Servicios de cerrajero, gasfitero y electricista por emergencia.</li>
+                    <li><strong>Asistencia Vial y Mascotas:</strong> Auxilio mecánico vehicular, consulta veterinaria y baño para mascotas.</li>
+                    <li><strong>Excelente método de ahorro:</strong> Respaldo financiero garantizado a futuro.</li>
+                </ul>
+            </div>
+        `;
+    } else {
+        document.getElementById('pdfTituloProducto').innerText = 'Propuesta Comercial Rímac';
+        activeContentHtml = `<p style="font-size: 11px; color: #475569;">Propuesta de servicios y coberturas de salud y bienestar Rímac.</p>`;
     }
 
     document.getElementById('pdfBodyTable').innerHTML = activeContentHtml;
 
+    // 2. Dar un pequeño respiro de 200ms para que el navegador renderice el contenido antes de convertirlo a PDF
     const element = document.getElementById('pdfPrintContainer');
-    const opt = {
-        margin: 0,
-        filename: `Cotizacion_RIMAC_${new Date().getTime()}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+    element.style.left = '0'; // Traerlo temporalmente al área visible del renderizador
 
-    html2pdf().set(opt).from(element).save();
+    setTimeout(() => {
+        const opt = {
+            margin:       10,
+            filename:     `Cotizacion_RIMAC_${new Date().getTime()}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            element.style.left = '-9999px'; // Devolverlo fuera de pantalla al finalizar
+        });
+    }, 200);
 }
 /* ==========================================================================
    CÁLCULO EXACTO Y FIEL AL EXCEL DE SALUD MODULARES
@@ -1331,6 +1347,301 @@ function getRateForAge(age, planType) {
     return row[planType] || 0;
 }
 /* ==========================================================================
+   VISTA PREVIA Y DESCARGA DE PDF ASEGURADA
+   ========================================================================== */
+
+/* ==========================================================================
+   MÓDULO DE VISTA PREVIA Y EXPORTACIÓN PDF RIMAC
+   ========================================================================== */
+
+function getHTMLTemplate() {
+    const cliente = document.getElementById('clientName')?.value || document.getElementById('modClientName')?.value || 'Carlos Ruiz';
+    const telefono = document.getElementById('clientPhone')?.value || document.getElementById('modClientPhone')?.value || '960778888';
+    const correo = document.getElementById('clientEmail')?.value || document.getElementById('modClientEmail')?.value || 'carlos.ruizc@rimac.com.pe';
+    const contacto = `${telefono} • ${correo}`;
+    
+    const asesor = document.getElementById('agentName')?.value || 'Carlos Ruiz';
+    const telAsesor = document.getElementById('agentPhone')?.value || '960778888';
+    const mailAsesor = document.getElementById('agentEmail')?.value || 'carlos.ruizc@rimac.com.pe';
+    const fecha = new Date().toLocaleDateString('es-PE');
+
+    let contenidoSimulacionHTML = '';
+
+    // 1. PESTAÑA: SEGUROS MODULARES
+    const modContainer = document.getElementById('content-modulares');
+    if (modContainer && !modContainer.classList.contains('hidden')) {
+        const planCards = document.querySelectorAll('#modularesResults .plan-card');
+        let planesList = [];
+
+        planCards.forEach(card => {
+            const planKey = card.getAttribute('data-plankey');
+            const chk = document.getElementById(`chk-${planKey}`);
+            
+            if (chk && chk.checked) {
+                const badge = card.querySelector('.uppercase')?.innerText || '';
+                const title = card.querySelector('h4')?.innerText || '';
+                const sa = card.querySelector('p.text-xs')?.innerText || '';
+                
+                const rows = card.querySelectorAll('.bg-slate-50 div');
+                let basePrice = '', descPrice = '', finalPrice = '';
+                
+                rows.forEach(r => {
+                    const txt = r.innerText;
+                    if (txt.includes('Prima Anual Base:')) basePrice = r.querySelector('span:last-child')?.innerText || '';
+                    if (txt.includes('Descuento:')) descPrice = r.querySelector('span:last-child')?.innerText || '';
+                    if (txt.includes('Prima Anual Con Desc.:')) finalPrice = r.querySelector('span:last-child')?.innerText || '';
+                });
+
+                const cuotaTxt = card.querySelector('.text-3xl')?.innerText || '';
+                const cuotaLabel = card.querySelector('.uppercase.tracking-wider')?.innerText || 'Cuotas Mensuales';
+
+                planesList.push({ badge, title, sa, basePrice, descPrice, finalPrice, cuotaTxt, cuotaLabel });
+            }
+        });
+
+        if (planesList.length > 0) {
+            let colsHTML = planesList.map(p => `
+                <div style="flex: 1; min-width: 180px; border: 1px solid #E2E8F0; border-radius: 8px; background: #FFFFFF; overflow: hidden;">
+                    <div style="background: #FFF1F1; border-bottom: 1px solid #FCA5A5; padding: 4px 8px; text-align: center;">
+                        <span style="color: #D31411; font-size: 7px; font-weight: 800; text-transform: uppercase;">${p.badge || 'Plan Recomendado'}</span>
+                    </div>
+                    <div style="padding: 10px;">
+                        <h4 style="margin: 0; font-size: 12px; font-weight: 900; color: #0F172A;">${p.title}</h4>
+                        <p style="margin: 2px 0 8px 0; font-size: 8px; color: #64748B; font-weight: 600;">${p.sa}</p>
+                        
+                        <div style="background: #F8FAFC; border-radius: 6px; padding: 6px; margin-bottom: 8px; font-size: 7.5px; line-height: 1.5;">
+                            <div style="display: flex; justify-content: space-between; color: #475569;">
+                                <span>Prima Base:</span>
+                                <span>${p.basePrice}</span>
+                            </div>
+                            ${p.descPrice ? `
+                            <div style="display: flex; justify-content: space-between; color: #16A34A; font-weight: 700;">
+                                <span>Descuento:</span>
+                                <span>${p.descPrice}</span>
+                            </div>` : ''}
+                            <div style="display: flex; justify-content: space-between; color: #0F172A; font-weight: 800; border-top: 1px dashed #CBD5E1; padding-top: 3px; margin-top: 3px;">
+                                <span>Anual Total:</span>
+                                <span style="color: #D31411;">${p.finalPrice || p.basePrice}</span>
+                            </div>
+                        </div>
+
+                        <div style="background: #FFF1F1; border: 1px solid #FCA5A5; border-radius: 6px; padding: 6px; text-align: center;">
+                            <span style="font-size: 6.5px; font-weight: 800; color: #9B0B09; text-transform: uppercase;">${p.cuotaLabel}</span>
+                            <div style="font-size: 16px; font-weight: 900; color: #D31411; margin-top: 1px;">${p.cuotaTxt}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            contenidoSimulacionHTML = `
+                <div style="margin-bottom: 12px;">
+                    <h3 style="color: #0F172A; font-size: 10px; font-weight: 800; margin: 0 0 6px 0; border-left: 3px solid #D31411; padding-left: 6px;">Propuesta de Coberturas Seleccionadas</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        ${colsHTML}
+                    </div>
+                </div>
+            `;
+        } else {
+            contenidoSimulacionHTML = `<p style="font-size: 9px; color: #DC2626; font-weight: bold; margin-bottom: 10px;">⚠️ No has marcado ningún plan para incluir en la propuesta.</p>`;
+        }
+    } 
+// 2. PESTAÑA: VIDA FUTURO GARANTIZADO
+    else if (document.getElementById('content-futuro') && !document.getElementById('content-futuro').classList.contains('hidden')) {
+        const resBox = document.getElementById('futuroResults');
+        
+        let aporte = 'S/ 0.00';
+        let proteccion = 'S/ 0.00';
+        let devolucion = 'S/ 0.00';
+        let porcentajeDev = '100%'; // Valor dinámico por defecto
+        let periodoAnos = '10 años'; // Periodo dinámico
+
+        // 1. Capturamos los años y el porcentaje directamente desde la interfaz
+        const selectAnos = document.getElementById('futuroYears')?.value || 
+                           document.getElementById('futuroPeriodo')?.value || 
+                           document.getElementById('futuroPlazo')?.value;
+        if (selectAnos) {
+            periodoAnos = `${selectAnos} años`;
+        }
+
+        // 2. Leemos la tarjeta de devolución para extraer el % real (100%, 125%, 150%, etc.)
+        if (resBox) {
+            const cards = resBox.querySelectorAll('div');
+            cards.forEach(c => {
+                const t = c.innerText;
+                
+                // Extraer Aporte Mensual
+                if (t.includes('Aporte Mensual')) {
+                    const match = t.match(/S\/\s*[\d,]+\.?\d*/);
+                    if (match) aporte = match[0];
+                }
+                
+                // Extraer Protección por Muerte
+                if (t.includes('Protección') || t.includes('Muerte')) {
+                    const match = t.match(/S\/\s*[\d,]+\.?\d*/);
+                    if (match) proteccion = match[0];
+                }
+                
+                // Extraer Devolución y detectar el Porcentaje
+                if (t.includes('Devolución') || t.includes('Retorno')) {
+                    const matchMonto = t.match(/S\/\s*[\d,]+\.?\d*/);
+                    if (matchMonto) devolucion = matchMonto[0];
+
+                    // Busca patrones como 125%, 150%, 100% en el texto
+                    const matchPct = t.match(/(\d{2,3}%)/);
+                    if (matchPct) porcentajeDev = matchPct[1];
+                }
+            });
+        }
+
+        contenidoSimulacionHTML = `
+            <div style="margin-bottom: 12px;">
+                <h3 style="color: #0F172A; font-size: 10px; font-weight: 800; margin: 0 0 8px 0; border-left: 3px solid #D31411; padding-left: 6px;">Plan Vida Futuro Garantizado (Ahorro y Protección)</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                    <!-- Aporte Mensual -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; text-align: center;">
+                        <span style="font-size: 7px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block;">Aporte Mensual Oficial</span>
+                        <div style="font-size: 14px; font-weight: 900; color: #0F172A; margin: 4px 0 2px 0; white-space: nowrap;">${aporte}</div>
+                        <span style="font-size: 6.5px; color: #64748B; font-weight: 600;">Durante ${periodoAnos}</span>
+                    </div>
+
+                    <!-- Protección por Muerte -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; text-align: center;">
+                        <span style="font-size: 7px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block;">Protección por Muerte (SA)</span>
+                        <div style="font-size: 14px; font-weight: 900; color: #D31411; margin: 4px 0 2px 0; white-space: nowrap;">${proteccion}</div>
+                        <span style="font-size: 6.5px; color: #64748B; font-weight: 600;">Cobertura desde Día 1</span>
+                    </div>
+
+                    <!-- Devolución Garantizada Dinámica -->
+                    <div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; padding: 10px; text-align: center;">
+                        <span style="font-size: 7px; color: #047857; font-weight: 800; text-transform: uppercase; display: block;">Devolución Garantizada (${porcentajeDev})</span>
+                        <div style="font-size: 14px; font-weight: 900; color: #059669; margin: 4px 0 2px 0; white-space: nowrap;">${devolucion}</div>
+                        <span style="font-size: 6.5px; color: #047857; font-weight: 600;">Retorno al finalizar el periodo</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    // 3. OTRAS PESTAÑAS (Salud de Oro, Salud Flexible)
+    else {
+        let title = 'Resumen de Cotización';
+        let content = '';
+        if (document.getElementById('content-oro') && !document.getElementById('content-oro').classList.contains('hidden')) {
+            title = 'Plan Salud de Oro (Adulto Mayor)';
+            content = document.getElementById('oroResults')?.innerHTML || '';
+        } else if (document.getElementById('content-flexible') && !document.getElementById('content-flexible').classList.contains('hidden')) {
+            title = 'Plan Salud Flexible';
+            content = document.getElementById('flexibleResults')?.innerHTML || '';
+        }
+
+        contenidoSimulacionHTML = `
+            <div style="margin-bottom: 12px;">
+                <h3 style="color: #0F172A; font-size: 10px; font-weight: 800; margin: 0 0 6px 0; border-left: 3px solid #D31411; padding-left: 6px;">${title}</h3>
+                <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; font-size: 8.5px;">
+                    ${content}
+                </div>
+            </div>
+        `;
+    }
+
+    return `
+        <div style="font-family: 'Inter', sans-serif; color: #1E293B; line-height: 1.4;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #D31411; padding-bottom: 8px; margin-bottom: 10px;">
+                <div>
+                    <h1 style="color: #D31411; font-size: 22px; margin: 0; font-weight: 900; letter-spacing: -1px;">RÍMAC</h1>
+                    <p style="color: #64748B; font-size: 7.5px; margin: 2px 0 0 0; font-weight: 600; font-style: italic;">"Estar bien hoy para estar mejor mañana"</p>
+                </div>
+                <div style="text-align: right;">
+                    <span style="background: #FFF1F1; color: #D31411; border: 1px solid #FCA5A5; padding: 3px 6px; border-radius: 4px; font-size: 7.5px; font-weight: 800; text-transform: uppercase;">Propuesta Comercial Oficial</span>
+                    <p style="font-size: 7.5px; color: #64748B; margin: 3px 0 0 0; font-weight: 500;">Fecha: <strong>${fecha}</strong></p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 8px; margin-bottom: 10px; font-size: 8px;">
+                <div>
+                    <span style="color: #94A3B8; font-weight: 800; text-transform: uppercase; font-size: 6.5px; display: block; margin-bottom: 1px;">Datos del Cliente</span>
+                    <p style="margin: 1px 0; color: #0F172A;"><strong>Titular:</strong> ${cliente}</p>
+                    <p style="margin: 1px 0; color: #475569;"><strong>Contacto:</strong> ${contacto}</p>
+                </div>
+                <div style="border-left: 1px solid #E2E8F0; padding-left: 8px;">
+                    <span style="color: #94A3B8; font-weight: 800; text-transform: uppercase; font-size: 6.5px; display: block; margin-bottom: 1px;">Asesor Comercial</span>
+                    <p style="margin: 1px 0; color: #0F172A;"><strong>Ejecutivo:</strong> ${asesor}</p>
+                    <p style="margin: 1px 0; color: #475569;"><strong>Tel:</strong> ${telAsesor} | <strong>Email:</strong> ${mailAsesor}</p>
+                </div>
+            </div>
+
+            ${contenidoSimulacionHTML}
+
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 8px; margin-bottom: 10px;">
+                <h4 style="color: #9B0B09; font-size: 8.5px; font-weight: 800; margin: 0 0 3px 0; text-transform: uppercase;">🛡️ Coberturas Clave Incluidas</h4>
+                <ul style="margin: 0; padding-left: 12px; font-size: 7.5px; color: #334155; line-height: 1.4;">
+                    <li>Protección integral ante imprevistos con respaldo financiero corporativo RIMAC.</li>
+                    <li>Planes de devolución garantizada ajustados al periodo de contratación.</li>
+                    <li>Atención y orientación comercial personalizada 24/7.</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid #E2E8F0; padding-top: 6px; display: flex; justify-content: space-between; font-size: 6.5px; color: #64748B;">
+                <span>Central de Emergencias Rímac: (01) 411-1111</span>
+                <span>Validez comercial: 30 días.</span>
+            </div>
+        </div>
+    `;
+}
+
+function exportToPDF() {
+    const modalBox = document.getElementById('modalContentBox');
+    if (modalBox) {
+        modalBox.innerHTML = getHTMLTemplate();
+    }
+    const modal = document.getElementById('quotePreviewModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
+}
+
+function closeQuotePreview() {
+    const modal = document.getElementById('quotePreviewModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
+function downloadPDFFromPreview() {
+    const printTemp = document.createElement('div');
+    printTemp.style.position = 'fixed';
+    printTemp.style.left = '-9999px';
+    printTemp.style.top = '0';
+    printTemp.style.width = '210mm';
+    printTemp.style.backgroundColor = '#FFFFFF';
+    printTemp.style.padding = '15mm';
+    printTemp.style.boxSizing = 'border-box';
+    printTemp.innerHTML = getHTMLTemplate();
+    
+    document.body.appendChild(printTemp);
+
+    const opt = {
+        margin:       0,
+        filename:     `Cotizacion_RIMAC_${new Date().getTime()}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    setTimeout(() => {
+        html2pdf().set(opt).from(printTemp).save().then(() => {
+            document.body.removeChild(printTemp);
+        }).catch(err => {
+            console.error("Error al descargar PDF:", err);
+            document.body.removeChild(printTemp);
+        });
+    }, 400);
+}
+
+/* ==========================================================================
    7. INICIALIZACIÓN AL CARGAR LA PÁGINA
    ========================================================================== */
-window.onload = () => switchTab('modulares');
+window.onload = () => {
+    switchTab('modulares');
+    if (typeof calcModulares === 'function') calcModulares();
+};

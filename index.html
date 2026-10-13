@@ -159,214 +159,217 @@
       </button>
     </div>
 
-<!-- PESTAÑA 1: SALUD MODULARES -->
-<section id="content-modulares" class="space-y-6">
-  <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-5">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-      <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
-        <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Configuración del Grupo Familiar (Modulares)
-      </h3>
-    </div>
+    <!-- PESTAÑA 1: SALUD MODULARES -->
+    <section id="content-modulares" class="space-y-6">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-5">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+            <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Configuración del Grupo Familiar (Modulares)
+          </h3>
+        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-      <div>
-        <label class="block text-xs font-bold text-slate-700 mb-1">Edad Titular</label>
-        <input id="modAgeTitular" type="number" value="35" min="0" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-700 mb-1">Cónyuge (Opcional - Edad)</label>
-        <input id="modAgeConyugue" type="number" placeholder="Ej. 33" min="0" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-700 mb-1">Hijos / Dependientes (Edades)</label>
-        <input id="modAgeDeps" type="text" placeholder="Ej. 5, 8" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none">
-      </div>
-    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Edad Titular</label>
+            <input id="modAgeTitular" type="number" value="35" min="0" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Cónyuge (Opcional - Edad)</label>
+            <input id="modAgeConyugue" type="number" placeholder="Ej. 33" min="0" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Hijos / Dependientes (Edades)</label>
+            <input id="modAgeDeps" type="text" placeholder="Ej. 5, 8" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-rimac-red outline-none">
+          </div>
+        </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">Modalidad de Pago</label>
-        <select id="modQuotas" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
-          <option value="12" selected>12 Cuotas Mensuales</option>
-          <option value="1">1 Pago Anual</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">% Descuento Comercial</label>
-        <div class="relative">
-          <input id="modDiscount" type="number" value="10" min="0" max="50" step="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none pr-8">
-          <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Modalidad de Pago</label>
+            <select id="modQuotas" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
+              <option value="12" selected>12 Cuotas Mensuales</option>
+              <option value="1">1 Pago Anual</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">% Descuento Comercial</label>
+            <div class="relative">
+              <input id="modDiscount" type="number" value="10" min="0" max="50" step="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none pr-8">
+              <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTÓN SIMULAR -->
+        <div class="pt-2 flex justify-end">
+          <button onclick="calcModulares()" class="w-full sm:w-auto bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Simular Cotización</span>
+          </button>
         </div>
       </div>
-    </div>
 
-    <!-- BOTÓN SIMULAR -->
-    <div class="pt-2 flex justify-end">
-      <button onclick="calcModulares()" class="w-full sm:w-auto bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
-        <i class="fa-solid fa-calculator"></i>
-        <span>Simular Cotización</span>
-      </button>
-    </div>
-  </div>
+      <div id="modularesResults" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </section>
 
-  <div id="modularesResults" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-</section>
+    <!-- PESTAÑA 2: SALUD DE ORO -->
+    <section id="content-oro" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-5">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+          <span class="w-3 h-3 bg-amber-500 rounded-full mr-2"></span> Cotizador Exclusivo - Seguro Salud de Oro (Adulto Mayor)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-amber-50/50 p-4 rounded-2xl border border-amber-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Edad del Asegurado (50+ años)</label>
+            <input id="oroAge" type="number" value="65" min="50" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-amber-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Tipo de Plan Oro</label>
+            <select id="oroPlanType" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none">
+              <option value="preferente" selected>Oro Plan Preferente</option>
+              <option value="red">Oro Plan Red</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Modalidad de Pago</label>
+            <select id="oroQuotas" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none">
+              <option value="12" selected>12 Cuotas Mensuales</option>
+              <option value="1">1 Pago Anual</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">% Descuento Comercial</label>
+            <div class="relative">
+              <input id="oroDiscount" type="number" value="5" min="0" max="50" step="1" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none pr-8">
+              <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+            </div>
+          </div>
+        </div>
 
- <!-- PESTAÑA 2: SALUD DE ORO -->
-<section id="content-oro" class="space-y-6 hidden">
-  <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-5">
-    <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
-      <span class="w-3 h-3 bg-amber-500 rounded-full mr-2"></span> Cotizador Exclusivo - Seguro Salud de Oro (Adulto Mayor)
-    </h3>
-<div class="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-amber-50/50 p-4 rounded-2xl border border-amber-200">
-  <div>
-    <label class="block text-xs font-bold text-slate-700 mb-1">Edad del Asegurado (50+ años)</label>
-    <input id="oroAge" type="number" value="65" min="50" max="99" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900 focus:border-amber-500 outline-none">
-  </div>
-  <div>
-    <label class="block text-xs font-bold text-slate-700 mb-1">Tipo de Plan Oro</label>
-    <select id="oroPlanType" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none">
-      <option value="preferente" selected>Oro Plan Preferente</option>
-      <option value="red">Oro Plan Red</option>
-    </select>
-  </div>
-  <div>
-    <label class="block text-xs font-bold text-slate-700 mb-1">Modalidad de Pago</label>
-    <select id="oroQuotas" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none">
-      <option value="12" selected>12 Cuotas Mensuales</option>
-      <option value="1">1 Pago Anual</option>
-    </select>
-  </div>
-  <div>
-    <label class="block text-xs font-bold text-slate-700 mb-1">% Descuento Comercial</label>
-    <div class="relative">
-      <input id="oroDiscount" type="number" value="5" min="0" max="50" step="1" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-amber-500 outline-none pr-8">
-      <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
-    </div>
-  </div>
-</div>
-
-    <!-- BOTÓN SIMULAR -->
-    <div class="pt-2 flex justify-end">
-      <button onclick="calcOro()" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
-        <i class="fa-solid fa-calculator"></i>
-        <span>Simular Cotización</span>
-      </button>
-    </div>
-  </div>
-
-  <div id="oroResults"></div>
-</section>
- <!-- PESTAÑA 3: SALUD FLEXIBLE -->
-<section id="content-flexible" class="space-y-6 hidden">
-  <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
-    <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
-      <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Configuración Salud Flexible
-    </h3>
-
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">Edad del Asegurado</label>
-        <input id="flexAge" type="number" value="28" min="0" max="99" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">Modalidad de Pago</label>
-        <select id="flexQuotas" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
-          <option value="12" selected>12 Cuotas Mensuales</option>
-          <option value="1">1 Pago Anual</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">% Descuento Comercial</label>
-        <div class="relative">
-          <input id="flexDiscount" type="number" value="0" min="0" max="50" step="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none pr-8">
-          <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+        <!-- BOTÓN SIMULAR -->
+        <div class="pt-2 flex justify-end">
+          <button onclick="calcOro()" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Simular Cotización</span>
+          </button>
         </div>
       </div>
-    </div>
 
-    <div class="border-t border-slate-100 pt-4 space-y-3">
-      <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider">
-        Coberturas Adicionales Elegibles:
-      </label>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
-          <input type="checkbox" id="chkA1" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
-          <span class="ml-3 text-xs font-bold text-slate-800">Chequeo Preventivo y Vacunas</span>
-        </label>
-        <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
-          <input type="checkbox" id="chkA2" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
-          <span class="ml-3 text-xs font-bold text-slate-800">Odontología y Oftalmología</span>
-        </label>
-        <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
-          <input type="checkbox" id="chkA3" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
-          <span class="ml-3 text-xs font-bold text-slate-800">Hospitalización y Maternidad</span>
-        </label>
-        <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
-          <input type="checkbox" id="chkA4" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
-          <span class="ml-3 text-xs font-bold text-slate-800">Sepelio y Exoneración</span>
-        </label>
-        <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
-          <input type="checkbox" id="chkA5" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
-          <span class="ml-3 text-xs font-bold text-slate-800">Emergencias y Ambulancia</span>
-        </label>
-        <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
-          <input type="checkbox" id="chkA6" class="w-4 h-4 text-rimac-red rounded accent-red-600">
-          <span class="ml-3 text-xs font-bold text-slate-800">Indemnización por Cáncer</span>
-        </label>
-      </div>
-    </div>
+      <div id="oroResults"></div>
+    </section>
 
-    <!-- BOTÓN SIMULAR -->
-    <div class="pt-2 flex justify-end">
-      <button onclick="calcFlexible()" class="w-full sm:w-auto bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
-        <i class="fa-solid fa-calculator"></i>
-        <span>Simular Cotización</span>
-      </button>
-    </div>
-  </div>
+    <!-- PESTAÑA 3: SALUD FLEXIBLE -->
+    <section id="content-flexible" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+          <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Configuración Salud Flexible
+        </h3>
 
-  <div id="flexibleResults"></div>
-</section>
-<!-- PESTAÑA 4: VIDA FUTURO GARANTIZADO -->
-<section id="content-futuro" class="space-y-6 hidden">
-  <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-4">
-    <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
-      <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Vida Futuro Garantizado (Tabla PAH)
-    </h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">Edad del Asegurado (18-64)</label>
-        <input id="futAge" type="number" value="35" min="18" max="64" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="onFuturoAgeChange()">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">Años de Ahorro (Plazo)</label>
-        <select id="futYears" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="onFuturoYearChange()">
-        </select>
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">Retorno Garantizado</label>
-        <select id="futReturn" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="onFuturoReturnChange()">
-        </select>
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-600 mb-1">Suma Asegurada Muerte</label>
-        <select id="futSA" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
-        </select>
-      </div>
-    </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Edad del Asegurado</label>
+            <input id="flexAge" type="number" value="28" min="0" max="99" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Modalidad de Pago</label>
+            <select id="flexQuotas" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
+              <option value="12" selected>12 Cuotas Mensuales</option>
+              <option value="1">1 Pago Anual</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">% Descuento Comercial</label>
+            <div class="relative">
+              <input id="flexDiscount" type="number" value="0" min="0" max="50" step="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none pr-8">
+              <span class="absolute right-3.5 top-2.5 font-bold text-slate-400 text-xs">%</span>
+            </div>
+          </div>
+        </div>
 
-    <!-- BOTÓN SIMULAR -->
-    <div class="pt-2 flex justify-end">
-      <button onclick="calcFuturo()" class="w-full sm:w-auto bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
-        <i class="fa-solid fa-calculator"></i>
-        <span>Simular Cotización</span>
-      </button>
-    </div>
-  </div>
+        <div class="border-t border-slate-100 pt-4 space-y-3">
+          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+            Coberturas Adicionales Elegibles:
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
+              <input type="checkbox" id="chkA1" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Chequeo Preventivo y Vacunas</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
+              <input type="checkbox" id="chkA2" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Odontología y Oftalmología</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
+              <input type="checkbox" id="chkA3" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Hospitalización y Maternidad</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
+              <input type="checkbox" id="chkA4" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Sepelio y Exoneración</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
+              <input type="checkbox" id="chkA5" class="w-4 h-4 text-rimac-red rounded accent-red-600" checked>
+              <span class="ml-3 text-xs font-bold text-slate-800">Emergencias y Ambulancia</span>
+            </label>
+            <label class="flex items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-red-50 transition">
+              <input type="checkbox" id="chkA6" class="w-4 h-4 text-rimac-red rounded accent-red-600">
+              <span class="ml-3 text-xs font-bold text-slate-800">Indemnización por Cáncer</span>
+            </label>
+          </div>
+        </div>
 
-  <div id="futuroResults"></div>
-</section>
+        <!-- BOTÓN SIMULAR -->
+        <div class="pt-2 flex justify-end">
+          <button onclick="calcFlexible()" class="w-full sm:w-auto bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Simular Cotización</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="flexibleResults"></div>
+    </section>
+
+    <!-- PESTAÑA 4: VIDA FUTURO GARANTIZADO -->
+    <section id="content-futuro" class="space-y-6 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-4">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center">
+          <span class="w-3 h-3 bg-rimac-red rounded-full mr-2"></span> Vida Futuro Garantizado (Tabla PAH)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Edad del Asegurado (18-64)</label>
+            <input id="futAge" type="number" value="35" min="18" max="64" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="onFuturoAgeChange()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Años de Ahorro (Plazo)</label>
+            <select id="futYears" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="onFuturoYearChange()">
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Retorno Garantizado</label>
+            <select id="futReturn" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none" onchange="onFuturoReturnChange()">
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Suma Asegurada Muerte</label>
+            <select id="futSA" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-extrabold text-slate-900 focus:border-rimac-red outline-none">
+            </select>
+          </div>
+        </div>
+
+        <!-- BOTÓN SIMULAR -->
+        <div class="pt-2 flex justify-end">
+          <button onclick="calcFuturo()" class="w-full sm:w-auto bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-black py-3 px-8 rounded-xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Simular Cotización</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="futuroResults"></div>
+    </section>
+
     <!-- PESTAÑA 5: BUSCADOR DE CLÍNICAS -->
     <section id="content-clinicas" class="space-y-6 hidden">
       <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-4">
@@ -429,7 +432,7 @@
           <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">9 Archivos Oficiales</span>
         </div>
         <p class="text-xs text-slate-500">
-          Consulta las cartillas informativas y folletos oficiales (incluyendo los 3 planes de Enfermedades Graves IEG). Haz clic en **Vista Previa** para leer el documento en pantalla o **Descargar**.
+          Consulta las cartillas informativas y folletos oficiales. Haz clic en **Vista Previa** para leer el documento en pantalla o **Descargar**.
         </p>
       </div>
 
@@ -453,41 +456,36 @@
 
   </main>
 
-  <!-- ==========================================
-       3. MODAL DE VISTA PREVIA DE DOCUMENTOS
-       ========================================== -->
-  <div id="previewModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex justify-center items-center p-4 hidden">
-    <div class="bg-white rounded-3xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
-      <div class="bg-rimac-gradient text-white px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-          <i class="fa-solid fa-file-pdf text-2xl text-yellow-300"></i>
-          <div>
-            <h4 id="modalDocTitle" class="text-base font-extrabold">Vista Previa del Documento</h4>
-            <p id="modalDocCategory" class="text-[11px] text-red-100">Documento Informativo RIMAC</p>
-          </div>
+<!-<!-- MODAL DE VISTA PREVIA DE COTIZACIÓN -->
+<div id="quotePreviewModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-3xl w-full flex flex-col shadow-2xl overflow-hidden" style="height: 85vh;">
+        
+        <!-- Cabecera del Modal -->
+        <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 flex-shrink-0">
+            <h3 class="text-sm font-black text-slate-900"><i class="fa-solid fa-file-invoice text-rimac-red mr-2"></i>Vista Previa de la Propuesta</h3>
+            <button onclick="closeQuotePreview()" class="text-slate-400 hover:text-slate-700 text-xs font-bold px-2 py-1">✕ Cerrar</button>
         </div>
-        <button onclick="closePreviewModal()" class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-      <div class="flex-grow bg-slate-100 relative p-2">
-        <iframe id="pdfIframe" class="w-full h-full rounded-2xl border border-slate-200" src=""></iframe>
-      </div>
-      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-        <p class="text-xs text-slate-500 font-medium">RIMAC Seguros y Reaseguros S.A.</p>
-        <div class="flex space-x-3">
-          <button onclick="closePreviewModal()" class="px-5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition">
-            Cerrar
-          </button>
-          <a id="modalDownloadBtn" href="#" download class="px-5 py-2.5 rounded-xl bg-rimac-red text-white text-xs font-bold hover:bg-rimac-darkred transition flex items-center space-x-2">
-            <i class="fa-solid fa-download"></i>
-            <span>Descargar PDF</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
 
+        <!-- Área donde se pintará visualmente la propuesta -->
+        <div class="p-6 overflow-y-auto flex-1 bg-slate-100" style="box-sizing: border-box;">
+            <div id="modalContentBox" style="background: #FFFFFF; width: 100%; max-width: 210mm; margin: 0 auto; padding: 15mm; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); box-sizing: border-box; font-family: 'Inter', sans-serif; color: #1E293B;">
+                <!-- Aquí se cargará el contenido -->
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="p-4 border-t border-slate-100 bg-white flex justify-end space-x-3 flex-shrink-0">
+            <button onclick="closeQuotePreview()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
+                <i class="fa-solid fa-calculator mr-1.5"></i>Seguir cotizando
+            </button>
+            <button onclick="downloadPDFFromPreview()" class="px-5 py-2.5 rounded-xl bg-rimac-red hover:bg-rimac-darkred text-white text-xs font-bold transition flex items-center space-x-2 shadow-sm">
+                <i class="fa-solid fa-download"></i>
+                <span>Descargar PDF</span>
+            </button>
+            
+        </div>
+    </div>
+</div>
   <!-- ==========================================
        4. PIE DE PÁGINA / FOOTER
        ========================================== -->
@@ -496,60 +494,6 @@
       <p>© 2026 RIMAC Seguros y Reaseguros S.A. | Herramienta Exclusiva para Asesores Comerciales</p>
     </div>
   </footer>
-
-  <!-- ==========================================
-       5. PLANTILLA OCULTA PARA IMPRESIÓN PDF A4
-       ========================================== -->
-  <div style="display: none;">
-    <div id="pdfPrintContainer">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #D31411; padding-bottom: 8px; margin-bottom: 10px;">
-        <div>
-          <div style="font-size: 24px; font-weight: 900; color: #D31411; letter-spacing: -1px; line-height: 1;">RIMAC</div>
-          <div style="font-size: 8px; font-weight: 700; color: #475569; margin-top: 2px;">SEGUROS Y REASEGUROS S.A.</div>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-size: 10px; font-weight: 800; color: #0F172A;" id="pdfNumCot">COTIZACIÓN N° RMC-2026-8921</div>
-          <div style="font-size: 8.5px; color: #64748B; margin-top: 1px;" id="pdfFechaEmision">Fecha de Emisión: 10/10/2026</div>
-          <div style="font-size: 8.5px; color: #D31411; font-weight: 700; margin-top: 1px;">Vigencia: 15 días calendario</div>
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 10px; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 8px; border-radius: 6px; margin-bottom: 12px;">
-        <div style="flex: 1;">
-          <div style="font-size: 8.5px; font-weight: 800; color: #D31411; text-transform: uppercase; margin-bottom: 3px; border-bottom: 1px solid #CBD5E1; padding-bottom: 2px;">Información del Cliente</div>
-          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Cliente:</strong> <span id="pdfValCliente">Jimena Esquivel</span></div>
-          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Grupo Familiar:</strong> <span id="pdfValGrupo">Titular (35 años)</span></div>
-          <div style="font-size: 9px;"><strong>Contacto:</strong> <span id="pdfValContacto">-</span></div>
-        </div>
-        <div style="flex: 1; border-left: 1px solid #CBD5E1; padding-left: 10px;">
-          <div style="font-size: 8.5px; font-weight: 800; color: #D31411; text-transform: uppercase; margin-bottom: 3px; border-bottom: 1px solid #CBD5E1; padding-bottom: 2px;">Asesor Comercial</div>
-          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Asesor:</strong> <span id="pdfValAsesor">Carlos Ruiz</span></div>
-          <div style="font-size: 9px; margin-bottom: 1px;"><strong>Móvil:</strong> <span id="pdfValTelefono">960778888</span></div>
-          <div style="font-size: 9px;"><strong>Correo:</strong> <span id="pdfValCorreo">carlos.ruizc@rimac.com.pe</span></div>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 10px;">
-        <div style="font-size: 10px; font-weight: 800; color: #0F172A; text-transform: uppercase; margin-bottom: 6px; border-left: 3px solid #D31411; padding-left: 6px;" id="pdfTituloProducto">
-          Propuesta Comercial de Seguro
-        </div>
-        <div id="pdfBodyTable" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;"></div>
-      </div>
-
-      <div style="background: #FFF1F1; border: 1px solid #FECDD3; padding: 8px; border-radius: 6px; margin-bottom: 10px;">
-        <div style="font-size: 9px; font-weight: 800; color: #D31411; margin-bottom: 2px;">BENEFICIOS INCLUIDOS EN LA COBERTURA:</div>
-        <ul style="font-size: 8px; color: #334155; padding-left: 12px; margin: 0; line-height: 1.3;">
-          <li>Atención ambulatoria y hospitalaria en la red de clínicas a nivel nacional.</li>
-          <li>Chequeos preventivos anuales al 100% de cobertura según póliza.</li>
-          <li>Atención de emergencias médicas y accidentes las 24 horas del día.</li>
-        </ul>
-      </div>
-
-      <div style="text-align: center; font-size: 7.5px; color: #94A3B8; border-top: 1px solid #E2E8F0; padding-top: 6px;">
-        RIMAC Seguros y Reaseguros S.A. | Av. Paseo de la República 3505, San Isidro, Lima | Central: (01) 411-1111
-      </div>
-    </div>
-  </div>
 
   <!-- ARCHIVO DE LÓGICA Y FUNCIONES -->
   <script src="script.js"></script>
