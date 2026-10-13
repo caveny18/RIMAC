@@ -1353,12 +1353,11 @@ function getRateForAge(age, planType) {
 /* ==========================================================================
    MÓDULO DE VISTA PREVIA Y EXPORTACIÓN PDF RIMAC
    ========================================================================== */
-
 function getHTMLTemplate() {
     const cliente = document.getElementById('clientName')?.value || document.getElementById('modClientName')?.value || 'Carlos Ruiz';
     const telefono = document.getElementById('clientPhone')?.value || document.getElementById('modClientPhone')?.value || '960778888';
     const correo = document.getElementById('clientEmail')?.value || document.getElementById('modClientEmail')?.value || 'carlos.ruizc@rimac.com.pe';
-    const contacto = `${telefono} • ${correo}`;
+    const contacto = `${telefono} / ${correo}`;
     
     const asesor = document.getElementById('agentName')?.value || 'Carlos Ruiz';
     const telAsesor = document.getElementById('agentPhone')?.value || '960778888';
@@ -1401,16 +1400,16 @@ function getHTMLTemplate() {
 
         if (planesList.length > 0) {
             let colsHTML = planesList.map(p => `
-                <div style="flex: 1; min-width: 180px; border: 1px solid #E2E8F0; border-radius: 8px; background: #FFFFFF; overflow: hidden;">
-                    <div style="background: #FFF1F1; border-bottom: 1px solid #FCA5A5; padding: 4px 8px; text-align: center;">
-                        <span style="color: #D31411; font-size: 7px; font-weight: 800; text-transform: uppercase;">${p.badge || 'Plan Recomendado'}</span>
+                <div style="flex: 1; min-width: 200px; border: 1.5px solid #CBD5E1; border-radius: 10px; background: #FFFFFF; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                    <div style="background: #FFF1F1; border-bottom: 1.5px solid #FCA5A5; padding: 8px 12px; text-align: center;">
+                        <span style="color: #D31411; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">${p.badge || 'Plan Recomendado'}</span>
                     </div>
-                    <div style="padding: 10px;">
-                        <h4 style="margin: 0; font-size: 12px; font-weight: 900; color: #0F172A;">${p.title}</h4>
-                        <p style="margin: 2px 0 8px 0; font-size: 8px; color: #64748B; font-weight: 600;">${p.sa}</p>
+                    <div style="padding: 14px;">
+                        <h4 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 900; color: #0F172A;">${p.title}</h4>
+                        <p style="margin: 0 0 12px 0; font-size: 11px; color: #64748B; font-weight: 600;">${p.sa}</p>
                         
-                        <div style="background: #F8FAFC; border-radius: 6px; padding: 6px; margin-bottom: 8px; font-size: 7.5px; line-height: 1.5;">
-                            <div style="display: flex; justify-content: space-between; color: #475569;">
+                        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; margin-bottom: 12px; font-size: 11.5px; line-height: 1.6;">
+                            <div style="display: flex; justify-content: space-between; color: #475569; font-weight: 500;">
                                 <span>Prima Base:</span>
                                 <span>${p.basePrice}</span>
                             </div>
@@ -1419,43 +1418,42 @@ function getHTMLTemplate() {
                                 <span>Descuento:</span>
                                 <span>${p.descPrice}</span>
                             </div>` : ''}
-                            <div style="display: flex; justify-content: space-between; color: #0F172A; font-weight: 800; border-top: 1px dashed #CBD5E1; padding-top: 3px; margin-top: 3px;">
+                            <div style="display: flex; justify-content: space-between; color: #0F172A; font-weight: 800; border-top: 1px dashed #CBD5E1; padding-top: 6px; margin-top: 4px;">
                                 <span>Anual Total:</span>
-                                <span style="color: #D31411;">${p.finalPrice || p.basePrice}</span>
+                                <span style="color: #D31411; font-size: 12.5px;">${p.finalPrice || p.basePrice}</span>
                             </div>
                         </div>
 
-                        <div style="background: #FFF1F1; border: 1px solid #FCA5A5; border-radius: 6px; padding: 6px; text-align: center;">
-                            <span style="font-size: 6.5px; font-weight: 800; color: #9B0B09; text-transform: uppercase;">${p.cuotaLabel}</span>
-                            <div style="font-size: 16px; font-weight: 900; color: #D31411; margin-top: 1px;">${p.cuotaTxt}</div>
+                        <div style="background: #FFF1F1; border: 1.5px solid #FCA5A5; border-radius: 8px; padding: 10px; text-align: center;">
+                            <span style="font-size: 9.5px; font-weight: 800; color: #9B0B09; text-transform: uppercase; display: block; margin-bottom: 2px;">${p.cuotaLabel}</span>
+                            <div style="font-size: 22px; font-weight: 900; color: #D31411; line-height: 1.1;">${p.cuotaTxt}</div>
                         </div>
                     </div>
                 </div>
             `).join('');
 
             contenidoSimulacionHTML = `
-                <div style="margin-bottom: 12px;">
-                    <h3 style="color: #0F172A; font-size: 10px; font-weight: 800; margin: 0 0 6px 0; border-left: 3px solid #D31411; padding-left: 6px;">Propuesta de Coberturas Seleccionadas</h3>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="margin-bottom: 16px;">
+                    <h3 style="color: #0F172A; font-size: 14px; font-weight: 800; margin: 0 0 10px 0; border-left: 4px solid #D31411; padding-left: 8px;">Propuesta de Coberturas Seleccionadas</h3>
+                    <div style="display: flex; gap: 14px; flex-wrap: wrap;">
                         ${colsHTML}
                     </div>
                 </div>
             `;
         } else {
-            contenidoSimulacionHTML = `<p style="font-size: 9px; color: #DC2626; font-weight: bold; margin-bottom: 10px;">⚠️ No has marcado ningún plan para incluir en la propuesta.</p>`;
+            contenidoSimulacionHTML = `<p style="font-size: 12px; color: #DC2626; font-weight: bold; margin-bottom: 12px;">⚠️ No has marcado ningún plan para incluir en la propuesta.</p>`;
         }
     } 
-// 2. PESTAÑA: VIDA FUTURO GARANTIZADO
+    // 2. PESTAÑA: VIDA FUTURO GARANTIZADO
     else if (document.getElementById('content-futuro') && !document.getElementById('content-futuro').classList.contains('hidden')) {
         const resBox = document.getElementById('futuroResults');
         
         let aporte = 'S/ 0.00';
         let proteccion = 'S/ 0.00';
         let devolucion = 'S/ 0.00';
-        let porcentajeDev = '100%'; // Valor dinámico por defecto
-        let periodoAnos = '10 años'; // Periodo dinámico
+        let porcentajeDev = '100%'; 
+        let periodoAnos = '10 años'; 
 
-        // 1. Capturamos los años y el porcentaje directamente desde la interfaz
         const selectAnos = document.getElementById('futuroYears')?.value || 
                            document.getElementById('futuroPeriodo')?.value || 
                            document.getElementById('futuroPlazo')?.value;
@@ -1463,30 +1461,21 @@ function getHTMLTemplate() {
             periodoAnos = `${selectAnos} años`;
         }
 
-        // 2. Leemos la tarjeta de devolución para extraer el % real (100%, 125%, 150%, etc.)
         if (resBox) {
             const cards = resBox.querySelectorAll('div');
             cards.forEach(c => {
                 const t = c.innerText;
-                
-                // Extraer Aporte Mensual
                 if (t.includes('Aporte Mensual')) {
                     const match = t.match(/S\/\s*[\d,]+\.?\d*/);
                     if (match) aporte = match[0];
                 }
-                
-                // Extraer Protección por Muerte
                 if (t.includes('Protección') || t.includes('Muerte')) {
                     const match = t.match(/S\/\s*[\d,]+\.?\d*/);
                     if (match) proteccion = match[0];
                 }
-                
-                // Extraer Devolución y detectar el Porcentaje
                 if (t.includes('Devolución') || t.includes('Retorno')) {
                     const matchMonto = t.match(/S\/\s*[\d,]+\.?\d*/);
                     if (matchMonto) devolucion = matchMonto[0];
-
-                    // Busca patrones como 125%, 150%, 100% en el texto
                     const matchPct = t.match(/(\d{2,3}%)/);
                     if (matchPct) porcentajeDev = matchPct[1];
                 }
@@ -1494,35 +1483,29 @@ function getHTMLTemplate() {
         }
 
         contenidoSimulacionHTML = `
-            <div style="margin-bottom: 12px;">
-                <h3 style="color: #0F172A; font-size: 10px; font-weight: 800; margin: 0 0 8px 0; border-left: 3px solid #D31411; padding-left: 6px;">Plan Vida Futuro Garantizado (Ahorro y Protección)</h3>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-                    <!-- Aporte Mensual -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; text-align: center;">
-                        <span style="font-size: 7px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block;">Aporte Mensual Oficial</span>
-                        <div style="font-size: 14px; font-weight: 900; color: #0F172A; margin: 4px 0 2px 0; white-space: nowrap;">${aporte}</div>
-                        <span style="font-size: 6.5px; color: #64748B; font-weight: 600;">Durante ${periodoAnos}</span>
+            <div style="margin-bottom: 16px;">
+                <h3 style="color: #0F172A; font-size: 14px; font-weight: 800; margin: 0 0 10px 0; border-left: 4px solid #D31411; padding-left: 8px;">Plan Vida Futuro Garantizado (Ahorro y Protección)</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                    <div style="background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 8px; padding: 14px; text-align: center;">
+                        <span style="font-size: 10px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block;">Aporte Mensual</span>
+                        <div style="font-size: 18px; font-weight: 900; color: #0F172A; margin: 6px 0 2px 0;">${aporte}</div>
+                        <span style="font-size: 9.5px; color: #64748B;">Durante ${periodoAnos}</span>
                     </div>
-
-                    <!-- Protección por Muerte -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; text-align: center;">
-                        <span style="font-size: 7px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block;">Protección por Muerte (SA)</span>
-                        <div style="font-size: 14px; font-weight: 900; color: #D31411; margin: 4px 0 2px 0; white-space: nowrap;">${proteccion}</div>
-                        <span style="font-size: 6.5px; color: #64748B; font-weight: 600;">Cobertura desde Día 1</span>
+                    <div style="background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 8px; padding: 14px; text-align: center;">
+                        <span style="font-size: 10px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block;">Protección (SA)</span>
+                        <div style="font-size: 18px; font-weight: 900; color: #D31411; margin: 6px 0 2px 0;">${proteccion}</div>
+                        <span style="font-size: 9.5px; color: #64748B;">Desde Día 1</span>
                     </div>
-
-                    <!-- Devolución Garantizada Dinámica -->
-                    <div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; padding: 10px; text-align: center;">
-                        <span style="font-size: 7px; color: #047857; font-weight: 800; text-transform: uppercase; display: block;">Devolución Garantizada (${porcentajeDev})</span>
-                        <div style="font-size: 14px; font-weight: 900; color: #059669; margin: 4px 0 2px 0; white-space: nowrap;">${devolucion}</div>
-                        <span style="font-size: 6.5px; color: #047857; font-weight: 600;">Retorno al finalizar el periodo</span>
+                    <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 8px; padding: 14px; text-align: center;">
+                        <span style="font-size: 10px; color: #047857; font-weight: 800; text-transform: uppercase; display: block;">Devolución (${porcentajeDev})</span>
+                        <div style="font-size: 18px; font-weight: 900; color: #059669; margin: 6px 0 2px 0;">${devolucion}</div>
+                        <span style="font-size: 9.5px; color: #047857;">Retorno final</span>
                     </div>
                 </div>
             </div>
         `;
-    }
-    // 3. OTRAS PESTAÑAS (Salud de Oro, Salud Flexible)
+    } 
+    // 3. OTRAS PESTAÑAS (Salud de Oro / Salud Flexible)
     else {
         let title = 'Resumen de Cotización';
         let content = '';
@@ -1535,60 +1518,77 @@ function getHTMLTemplate() {
         }
 
         contenidoSimulacionHTML = `
-            <div style="margin-bottom: 12px;">
-                <h3 style="color: #0F172A; font-size: 10px; font-weight: 800; margin: 0 0 6px 0; border-left: 3px solid #D31411; padding-left: 6px;">${title}</h3>
-                <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; font-size: 8.5px;">
+            <div style="margin-bottom: 16px;">
+                <h3 style="color: #0F172A; font-size: 14px; font-weight: 800; margin: 0 0 10px 0; border-left: 4px solid #D31411; padding-left: 8px;">${title}</h3>
+                <div style="background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 8px; padding: 12px; font-size: 11px;">
                     ${content}
                 </div>
             </div>
         `;
     }
 
+    // RETORNO CON DISEÑO ESTABLECIDO EN HD
     return `
-        <div style="font-family: 'Inter', sans-serif; color: #1E293B; line-height: 1.4;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #D31411; padding-bottom: 8px; margin-bottom: 10px;">
+        <div style="font-family: 'Inter', sans-serif; color: #1E293B; display: flex; align-items: stretch; width: 100%; height: auto; box-sizing: border-box; background: #FFFFFF;">
+            
+            <!-- BARRA LATERAL CORPORATIVA RÍMAC (HD) -->
+            <div style="width: 240px; background: #D31411; color: #FFFFFF; padding: 20px 16px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; flex-shrink: 0;">
                 <div>
-                    <h1 style="color: #D31411; font-size: 22px; margin: 0; font-weight: 900; letter-spacing: -1px;">RÍMAC</h1>
-                    <p style="color: #64748B; font-size: 7.5px; margin: 2px 0 0 0; font-weight: 600; font-style: italic;">"Estar bien hoy para estar mejor mañana"</p>
+                    <h1 style="color: #FFFFFF; font-size: 28px; margin: 0; font-weight: 900; letter-spacing: -1px;">RÍMAC</h1>
+                    <p style="color: #FFE4E6; font-size: 9.5px; margin: 4px 0 16px 0; font-weight: 500; font-style: italic; line-height: 1.3;">"Estar bien hoy para estar mejor mañana"</p>
+                    
+                    <div style="background: rgba(255,255,255,0.2); padding: 6px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; text-align: center; margin-bottom: 16px; letter-spacing: 0.5px;">
+                        Propuesta Oficial
+                    </div>
+
+                    <div style="margin-bottom: 14px; font-size: 11px;">
+                        <span style="color: #FCA5A5; font-weight: 800; text-transform: uppercase; font-size: 9px; display: block; margin-bottom: 2px;">Fecha de Emisión</span>
+                        <span style="font-weight: 600;">${fecha}</span>
+                    </div>
+
+                    <div style="margin-bottom: 14px; font-size: 11px;">
+                        <span style="color: #FCA5A5; font-weight: 800; text-transform: uppercase; font-size: 9px; display: block; margin-bottom: 2px;">Datos del Cliente</span>
+                        <p style="margin: 0; font-weight: 800; font-size: 12px;">${cliente}</p>
+                        <p style="margin: 2px 0 0 0; font-size: 10px; color: #FFE4E6; white-space: pre-line;">${contacto}</p>
+                    </div>
+
+                    <div style="font-size: 11px;">
+                        <span style="color: #FCA5A5; font-weight: 800; text-transform: uppercase; font-size: 9px; display: block; margin-bottom: 2px;">Asesor Comercial</span>
+                        <p style="margin: 0; font-weight: 800; font-size: 12px;">${asesor}</p>
+                        <p style="margin: 2px 0 0 0; font-size: 10px; color: #FFE4E6;">Tel: ${telAsesor}</p>
+                        <p style="margin: 1px 0 0 0; font-size: 10px; color: #FFE4E6;">${mailAsesor}</p>
+                    </div>
                 </div>
-                <div style="text-align: right;">
-                    <span style="background: #FFF1F1; color: #D31411; border: 1px solid #FCA5A5; padding: 3px 6px; border-radius: 4px; font-size: 7.5px; font-weight: 800; text-transform: uppercase;">Propuesta Comercial Oficial</span>
-                    <p style="font-size: 7.5px; color: #64748B; margin: 3px 0 0 0; font-weight: 500;">Fecha: <strong>${fecha}</strong></p>
+
+                <div style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 12px; font-size: 9.5px; color: #FFE4E6; text-align: center; margin-top: 20px;">
+                    Central de Emergencias: (01) 411-1111
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 8px; margin-bottom: 10px; font-size: 8px;">
+            <!-- CONTENIDO PRINCIPAL (HD Dinámico) -->
+            <div style="flex: 1; padding: 20px; background: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box;">
                 <div>
-                    <span style="color: #94A3B8; font-weight: 800; text-transform: uppercase; font-size: 6.5px; display: block; margin-bottom: 1px;">Datos del Cliente</span>
-                    <p style="margin: 1px 0; color: #0F172A;"><strong>Titular:</strong> ${cliente}</p>
-                    <p style="margin: 1px 0; color: #475569;"><strong>Contacto:</strong> ${contacto}</p>
+                    ${contenidoSimulacionHTML}
+
+                    <div style="background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 8px; padding: 12px; margin-top: 12px;">
+                        <h4 style="color: #9B0B09; font-size: 11px; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase;">🛡️ Coberturas Clave Incluidas</h4>
+                        <ul style="margin: 0; padding-left: 14px; font-size: 10px; color: #334155; line-height: 1.5;">
+                            <li>Protección integral ante imprevistos con respaldo financiero corporativo RIMAC.</li>
+                            <li>Planes de devolución garantizada ajustados al periodo de contratación.</li>
+                            <li>Atención y orientación comercial personalizada 24/7.</li>
+                        </ul>
+                    </div>
                 </div>
-                <div style="border-left: 1px solid #E2E8F0; padding-left: 8px;">
-                    <span style="color: #94A3B8; font-weight: 800; text-transform: uppercase; font-size: 6.5px; display: block; margin-bottom: 1px;">Asesor Comercial</span>
-                    <p style="margin: 1px 0; color: #0F172A;"><strong>Ejecutivo:</strong> ${asesor}</p>
-                    <p style="margin: 1px 0; color: #475569;"><strong>Tel:</strong> ${telAsesor} | <strong>Email:</strong> ${mailAsesor}</p>
+
+                <div style="border-top: 1px solid #CBD5E1; padding-top: 10px; display: flex; justify-content: space-between; font-size: 9.5px; color: #64748B; margin-top: 14px;">
+                    <span>Documento informativo generado para propuesta comercial oficial.</span>
+                    <span>Validez comercial: 30 días.</span>
                 </div>
             </div>
 
-            ${contenidoSimulacionHTML}
-
-            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 8px; margin-bottom: 10px;">
-                <h4 style="color: #9B0B09; font-size: 8.5px; font-weight: 800; margin: 0 0 3px 0; text-transform: uppercase;">🛡️ Coberturas Clave Incluidas</h4>
-                <ul style="margin: 0; padding-left: 12px; font-size: 7.5px; color: #334155; line-height: 1.4;">
-                    <li>Protección integral ante imprevistos con respaldo financiero corporativo RIMAC.</li>
-                    <li>Planes de devolución garantizada ajustados al periodo de contratación.</li>
-                    <li>Atención y orientación comercial personalizada 24/7.</li>
-                </ul>
-            </div>
-
-            <div style="border-top: 1px solid #E2E8F0; padding-top: 6px; display: flex; justify-content: space-between; font-size: 6.5px; color: #64748B;">
-                <span>Central de Emergencias Rímac: (01) 411-1111</span>
-                <span>Validez comercial: 30 días.</span>
-            </div>
         </div>
     `;
 }
-
 function exportToPDF() {
     const modalBox = document.getElementById('modalContentBox');
     if (modalBox) {
@@ -1615,27 +1615,46 @@ function downloadPDFFromPreview() {
         return;
     }
 
+    // 1. Forzamos el ancho ideal para mantener el diseño horizontal simétrico
+    const originalWidth = modalBox.style.width;
+    modalBox.style.width = '1100px';
+    modalBox.style.maxWidth = 'none';
+
+    // 2. Medimos el ancho y alto real exacto que ocupa tu diseño en el DOM
+    const actualWidth = modalBox.scrollWidth || 1100;
+    const actualHeight = modalBox.scrollHeight || 650;
+
     const opt = {
-        margin:       10, // Margen de 10mm para que respire la hoja A4
+        margin:       0,   // Sin márgenes de relleno
         filename:     `Cotizacion_RIMAC_${new Date().getTime()}.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
+        image:        { type: 'jpeg', quality: 1.0 }, // Calidad máxima de imagen
         html2canvas:  { 
             scale: 2,           
             useCORS: true,      
             logging: false,
             letterRendering: true,
-            scrollY: 0          // Evita que capture desplazamiento fantasma del modal
+            x: 0,
+            y: 0,
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: 1100
         },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        // 🚀 LA JUGADA MAESTRA: Convertimos los píxeles exactos a milímetros para que el PDF 
+        // se recorte milimétricamente al tamaño exacto de tu contenido, sin dejar espacios vacíos.
+        jsPDF:        { unit: 'px', format: [actualWidth, actualHeight], orientation: 'landscape' },
+        pagebreak:    { mode: ['avoid-all'] }
     };
 
-    // Tomamos directamente el modal que ya se ve en pantalla
-    html2pdf().set(opt).from(modalBox).save().catch(err => {
-        console.error("Error al descargar PDF:", err);
+    html2pdf().set(opt).from(modalBox).save().then(() => {
+        modalBox.style.width = originalWidth;
+        modalBox.style.maxWidth = '';
+    }).catch(err => {
+        console.error("Error al generar el PDF:", err);
+        modalBox.style.width = originalWidth;
+        modalBox.style.maxWidth = '';
         alert("Ocurrió un error al generar el PDF.");
     });
 }
-
 /* ==========================================================================
    7. INICIALIZACIÓN AL CARGAR LA PÁGINA
    ========================================================================== */
