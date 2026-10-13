@@ -1608,34 +1608,32 @@ function closeQuotePreview() {
 }
 
 function downloadPDFFromPreview() {
-    const printTemp = document.createElement('div');
-    printTemp.style.position = 'fixed';
-    printTemp.style.left = '-9999px';
-    printTemp.style.top = '0';
-    printTemp.style.width = '210mm';
-    printTemp.style.backgroundColor = '#FFFFFF';
-    printTemp.style.padding = '15mm';
-    printTemp.style.boxSizing = 'border-box';
-    printTemp.innerHTML = getHTMLTemplate();
+    const modalBox = document.getElementById('modalContentBox');
     
-    document.body.appendChild(printTemp);
+    if (!modalBox) {
+        alert("No se encontró el contenido de la vista previa.");
+        return;
+    }
 
     const opt = {
-        margin:       0,
+        margin:       10, // Margen de 10mm para que respire la hoja A4
         filename:     `Cotizacion_RIMAC_${new Date().getTime()}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        html2canvas:  { 
+            scale: 2,           
+            useCORS: true,      
+            logging: false,
+            letterRendering: true,
+            scrollY: 0          // Evita que capture desplazamiento fantasma del modal
+        },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    setTimeout(() => {
-        html2pdf().set(opt).from(printTemp).save().then(() => {
-            document.body.removeChild(printTemp);
-        }).catch(err => {
-            console.error("Error al descargar PDF:", err);
-            document.body.removeChild(printTemp);
-        });
-    }, 400);
+    // Tomamos directamente el modal que ya se ve en pantalla
+    html2pdf().set(opt).from(modalBox).save().catch(err => {
+        console.error("Error al descargar PDF:", err);
+        alert("Ocurrió un error al generar el PDF.");
+    });
 }
 
 /* ==========================================================================
