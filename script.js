@@ -1651,6 +1651,59 @@ function downloadPDFFromPreview() {
         alert("Ocurrió un error al generar el PDF.");
     });
 }
+// ==========================================
+// FUNCIÓN PARA DESCARGAR LA COTIZACIÓN COMO IMAGEN (PNG)
+// ==========================================
+function downloadAsImage() {
+    const modalBox = document.getElementById('modalContentBox');
+    
+    if (!modalBox) {
+        alert("No se encontró el contenido de la vista previa.");
+        return;
+    }
+
+    if (typeof html2canvas === 'undefined') {
+        alert("Error: La librería html2canvas aún no está cargada.");
+        return;
+    }
+
+    // 1. Forzamos el ancho ideal para mantener el diseño simétrico
+    const originalWidth = modalBox.style.width;
+    modalBox.style.width = '1100px';
+    modalBox.style.maxWidth = 'none';
+
+    // 2. Renderizamos directamente el contenedor con calidad HD
+    html2canvas(modalBox, {
+        scale: 2.5,           // Alta resolución nítida
+        useCORS: true,      
+        logging: false,
+        letterRendering: true,
+        x: 0,
+        y: 0,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: 1100,
+        backgroundColor: '#FFFFFF' // Fondo blanco asegurado
+    }).then(canvas => {
+        // Restauramos el ancho original del modal
+        modalBox.style.width = originalWidth;
+        modalBox.style.maxWidth = '';
+
+        // Creamos la descarga directa del archivo PNG
+        const link = document.createElement('a');
+        link.download = `Cotizacion_RIMAC_${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+    }).catch(err => {
+        console.error("Error al generar la imagen:", err);
+        modalBox.style.width = originalWidth;
+        modalBox.style.maxWidth = '';
+        alert("Ocurrió un error al descargar la imagen.");
+    });
+}
+
+// Vinculación global por seguridad
+window.downloadAsImage = downloadAsImage;
 /* ==========================================================================
    7. INICIALIZACIÓN AL CARGAR LA PÁGINA
    ========================================================================== */

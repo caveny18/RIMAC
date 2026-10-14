@@ -8,6 +8,7 @@
   <!-- LIBRERÍAS EXTERNAS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -482,6 +483,9 @@
                 <i class="fa-solid fa-download"></i>
                 <span>Descargar PDF</span>
             </button>
+            <button onclick="downloadAsImage()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded-lg text-xs transition duration-200 flex items-center gap-2">
+    <span>🖼️</span> Descargar como Imagen
+</button>
             
         </div>
     </div>
